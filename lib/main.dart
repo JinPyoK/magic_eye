@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'Login/login_main.dart';
 import 'Login/signup.dart';
+import 'MagicEyeView/navi_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         '/Login/LoginMain' : (context) => const LoginMain(),
         '/Login/SignUp' : (context) => const SignUp(),
       },
-      home: const HomeScreen(),
+      home: const NaviScreen(),
     );
   }
 }
