@@ -11,7 +11,7 @@ bool resetPasswordLoading = false;
 
 String getUID() {
   if (_auth.currentUser == null) {
-    throw Exception();
+    return 'NO UID';
   }
   return _auth.currentUser!.uid;
 }
@@ -76,7 +76,9 @@ Future<String> signIn({required String email, required String password}) async {
 
 Future<void> emailVerify() async {
   try {
-    await _auth.currentUser!.sendEmailVerification();
+    if (_auth.currentUser != null) {
+      await _auth.currentUser!.sendEmailVerification();
+    }
   } on FirebaseAuthException catch (error) {
     print("EmailVerify Error: ${error.code}");
   }
@@ -84,7 +86,9 @@ Future<void> emailVerify() async {
 
 Future<void> updatePassword({required String newPassword}) async {
   try {
-    await _auth.currentUser!.updatePassword(newPassword);
+    if (_auth.currentUser != null) {
+      await _auth.currentUser!.updatePassword(newPassword);
+    }
   } on FirebaseAuthException catch (error) {
     print("UpdatePassword Error: ${error.code}");
   }
@@ -92,7 +96,9 @@ Future<void> updatePassword({required String newPassword}) async {
 
 Future<void> resetPassword({required String email}) async {
   try {
-    await _auth.sendPasswordResetEmail(email: email);
+    if (_auth.currentUser != null) {
+      await _auth.sendPasswordResetEmail(email: email);
+    }
   } on FirebaseAuthException catch (error) {
     print("ResetPassword Error: ${error.code}");
   }
@@ -100,7 +106,9 @@ Future<void> resetPassword({required String email}) async {
 
 Future<void> signOut() async {
   try {
-    await _auth.signOut();
+    if (_auth.currentUser != null) {
+      await _auth.signOut();
+    }
   } on FirebaseAuthException catch (error) {
     print("SignOut Error: ${error.code}");
   }
