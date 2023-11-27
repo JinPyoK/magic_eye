@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
+import 'auth.dart';
 
-class LoginMain extends StatefulWidget {
-  const LoginMain({super.key});
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
 
   @override
-  State<LoginMain> createState() => _LoginMainState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _LoginMainState extends State<LoginMain> {
+class _SignInState extends State<SignIn> {
   final formKey = GlobalKey<FormState>();
+
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
+    navFunction() {
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/MagicEyeView/NaviScreen', (route) => false);
+    }
+    focusOut() {
+      FocusScope.of(context).unfocus();
+    }
+    var snack = ScaffoldMessenger.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -37,7 +49,9 @@ class _LoginMainState extends State<LoginMain> {
                   renderTextFormField(
                     label: '이메일',
                     hint: '이메일을 입력해주세요',
-                    onSaved: (val) {},
+                    onSaved: (val) {
+                      email = val;
+                    },
                     validator: (val) {
                       if (val.length < 1) {
                         return '필수 사항입니다.';
@@ -50,7 +64,9 @@ class _LoginMainState extends State<LoginMain> {
                   renderTextFormField(
                     label: '비밀번호',
                     hint: '비밀번호를 입력해주세요',
-                    onSaved: (val) {},
+                    onSaved: (val) {
+                      password = val;
+                    },
                     validator: (val) {
                       if (val.length < 1) {
                         return '필수 사항입니다.';
@@ -63,7 +79,31 @@ class _LoginMainState extends State<LoginMain> {
                 ],
               )),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              if (formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+                focusOut();
+                setState(() {
+                  signInLoading = true;
+                });
+                var errorCode = await signIn(email: email, password: password);
+                setState(() {
+                  signInLoading = false;
+                });
+                if (errorCode != '') {
+                  snack.showSnackBar(SnackBar(
+                      backgroundColor: Colors.deepPurpleAccent,
+                      content: Center(
+                        child: Text(
+                          errorCode,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      )));
+                } else {
+                  navFunction();
+                }
+              }
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xff7C72EC),
               foregroundColor: Colors.white,
@@ -74,7 +114,11 @@ class _LoginMainState extends State<LoginMain> {
                 borderRadius: BorderRadius.circular(5),
               ),
             ),
-            child: const Text("로그인"),
+            child: signInLoading
+                ? const CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : const Text("로그인"),
           ),
           const SizedBox(
             height: 20,

@@ -6,21 +6,17 @@ class NaviScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var snack = ScaffoldMessenger.of(context);
     return Scaffold(
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: () {
-              Confirm();
+            ElevatedButton(onPressed: () async {
+              await signOut();
             }, child: const Text("로그아웃")),
             const SizedBox(width: 100,),
-            ElevatedButton(onPressed: () async {
-              var errorCode = await SignUp(email: "kjp527@google.com", password: "12345678");
-              if (errorCode != '') {
-                snack.showSnackBar(SnackBar(content: Text(errorCode, style: const TextStyle(color: Colors.white),), backgroundColor: Colors.deepPurpleAccent,));
-              }
+            ElevatedButton(onPressed: () {
+              confirm();
             }, child: const Text("상태")),
           ],
         ),

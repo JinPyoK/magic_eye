@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
-import 'Login/login_main.dart';
+import 'Login/signin.dart';
 import 'Login/signup.dart';
 import 'MagicEyeView/navi_screen.dart';
+import 'package:magic_eye/Login/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -23,10 +24,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/Login/LoginMain' : (context) => const LoginMain(),
+        '/Login/LoginMain' : (context) => const SignIn(),
         '/Login/SignUp' : (context) => const SignUp(),
+        '/MagicEyeView/NaviScreen' : (context) => const NaviScreen(),
       },
-      home: const NaviScreen(),
+      home: isLogin() ? const NaviScreen() : const HomeScreen(),
     );
   }
 }

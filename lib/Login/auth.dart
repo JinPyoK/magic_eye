@@ -3,14 +3,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 String _errorCode = '';
 
+bool signUpLoading = false;
+bool signInLoading = false;
+
 String getUID() {
   return _auth.currentUser!.uid;
 }
 
-Future<String> SignUp({required String email, required String password}) async {
+bool isLogin() {
+  if (_auth.currentUser == null) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+Future<String> signUp({required String email, required String password}) async {
   try {
-    UserCredential _usercred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    if (_usercred == null) {
+    UserCredential usercred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    if (usercred == null) {
       _errorCode = '서버에 문제가 생겼습니다.';
       return _errorCode;
     }
@@ -36,39 +47,28 @@ Future<String> SignUp({required String email, required String password}) async {
   }
 }
 
-Future<String> SignIn({required String email, required String password}) async {
+Future<String> signIn({required String email, required String password}) async {
   try {
-    UserCredential _usercred = await _auth.signInWithEmailAndPassword(email: email, password: password);
-    if (_usercred == null) {
+    UserCredential usercred = await _auth.signInWithEmailAndPassword(email: email, password: password);
+    if (usercred == null) {
       _errorCode = '서버에 문제가 생겼습니다.';
       return _errorCode;
     }
     return '';
   } on FirebaseAuthException catch (error) {
-    switch (error.code) {
-      case "user-disabled":
-        _errorCode = "계정을 정지되었습니다.";
-        break;
-      case "invalid-email":
-        _errorCode = "유효하지 않은 이메일입니다.";
-        break;
-      case "user-not-found":
-        _errorCode = "해당 계정이 존재하지 않습니다.\n회원가입을 진행해주세요.";
-        break;
-      case "wrong-password":
-        _errorCode = "비밀번호가 다릅니다.";
-        break;
-      default:
-        _errorCode = "에러가 발생했습니다.";
-    }
+    _errorCode = "오류가 발생했습니다 (${error.code})";
     return _errorCode;
   }
 }
 
-Future<void> SignOut() async {
+Future<void> signOut() async {
   await _auth.signOut();
 }
 
-void Confirm(){
-  print(_auth.currentUser!.uid);
+void confirm(){
+  if (_auth.currentUser == null) {
+    print('null입니다');
+  } else {
+    print(_auth.currentUser!.uid);
+  }
 }

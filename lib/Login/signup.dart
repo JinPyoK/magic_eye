@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
+import 'auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -11,16 +12,24 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final formKey = GlobalKey<FormState>();
 
-  Map<String, dynamic> info = {
-    "email" : "",
-    "password" : "",
-    "passwordConfirm" : "",
-    "name" : "",
-    "storeNumber" : "",
-  };
+  String email = '';
+  String password = '';
+  String passwordConfirm = '';
+  String name = '';
+  String storeNumber = '';
 
   @override
   Widget build(BuildContext context) {
+    var snack = ScaffoldMessenger.of(context);
+    navFunction() {
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/MagicEyeView/NaviScreen', (route) => false);
+    }
+
+    focusOut() {
+      FocusScope.of(context).unfocus();
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Row(
@@ -54,14 +63,13 @@ class _SignUpState extends State<SignUp> {
                         hint: '예) email@google.com',
                         onSaved: (val) {
                           setState(() {
-                            info['email'] = val;
+                            email = val;
                           });
                         },
                         validator: (val) {
                           if (val.length < 1) {
                             return '필수 사항입니다.';
-                          }
-                          else if (!isEmail(val)) {
+                          } else if (!isEmail(val)) {
                             return '이메일 형식으로 입력해주세요';
                           }
                           return null;
@@ -72,14 +80,16 @@ class _SignUpState extends State<SignUp> {
                         hint: '영문, 숫자 조합 8~16자',
                         onSaved: (val) {
                           setState(() {
-                            info['password'] = val;
+                            password = val;
                           });
                         },
                         validator: (val) {
                           if (val.length < 1) {
                             return '필수 사항입니다.';
-                          }
-                          else if (val.length < 8 || val.length > 16 || isAlpha(val) || isNumeric(val)) {
+                          } else if (val.length < 8 ||
+                              val.length > 16 ||
+                              isAlpha(val) ||
+                              isNumeric(val)) {
                             return '영문, 숫자 조합 8~16자';
                           }
                           return null;
@@ -90,14 +100,13 @@ class _SignUpState extends State<SignUp> {
                         hint: '비밀번호를 한번 더 입력해주세요',
                         onSaved: (val) {
                           setState(() {
-                            info['passwordConfirm'] = val;
+                            passwordConfirm = val;
                           });
                         },
                         validator: (val) {
                           if (val.length < 1) {
                             return '필수 사항입니다.';
-                          }
-                          else if (info['password'] != info['passwordConfirm']) {
+                          } else if (password != passwordConfirm) {
                             return '비밀번호가 다릅니다!';
                           }
                           return null;
@@ -108,7 +117,7 @@ class _SignUpState extends State<SignUp> {
                         hint: '예) 홍길동',
                         onSaved: (val) {
                           setState(() {
-                            info['name'] = val;
+                            name = val;
                           });
                         },
                         validator: (val) {
@@ -123,7 +132,7 @@ class _SignUpState extends State<SignUp> {
                         hint: '영문, 숫자 조합 10자',
                         onSaved: (val) {
                           setState(() {
-                            info['storeNumber'] = val;
+                            storeNumber = val;
                           });
                         },
                         validator: (val) {
@@ -141,24 +150,44 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ],
                   )),
-
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
+                    focusOut();
+                    setState(() {
+                      signUpLoading = true;
+                    });
+                    var errorCode =
+                        await signUp(email: email, password: password);
+                    setState(() {
+                      signUpLoading = false;
+                    });
+                    if (errorCode != '') {
+                      snack.showSnackBar(SnackBar(
+                          backgroundColor: Colors.deepPurpleAccent,
+                          content: Center(
+                            child: Text(
+                              errorCode,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          )));
+                    } else {
+                      navFunction();
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff7C72EC),
                   foregroundColor: Colors.white,
-                  textStyle:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                   fixedSize: const Size(300, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                child: const Text("회원가입"),
+                child: signUpLoading ? const CircularProgressIndicator(color: Colors.white,) : const Text("회원가입"),
               ),
             ],
           ),
@@ -201,7 +230,8 @@ class _SignUpState extends State<SignUp> {
             },
             decoration: InputDecoration(
               hintText: hint,
-              contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               border: const OutlineInputBorder(),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(
