@@ -17,9 +17,17 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    navFunction() {
+    nav1Function() {
       Navigator.pushNamedAndRemoveUntil(
           context, '/MagicEyeView/NaviScreen', (route) => false);
+    }
+    nav2Function() {
+      Navigator.pushNamed(
+          context, '/Login/EmailVerify');
+    }
+    nav3Function() {
+      Navigator.pushNamed(
+          context, '/Login/ResetPassword');
     }
     focusOut() {
       FocusScope.of(context).unfocus();
@@ -100,7 +108,11 @@ class _SignInState extends State<SignIn> {
                         ),
                       )));
                 } else {
-                  navFunction();
+                  if (isEmailVerified()) {
+                    nav1Function();
+                  } else {
+                    nav2Function();
+                  }
                 }
               }
             },
@@ -162,8 +174,9 @@ class _SignInState extends State<SignIn> {
               const SizedBox(
                 width: 50,
               ),
-              TextButton(onPressed: () {}, child: const Text("이메일 찾기")),
-              TextButton(onPressed: () {}, child: const Text("비밀번호 찾기")),
+              TextButton(onPressed: () {
+                nav3Function();
+              }, child: const Text("비밀번호 초기화")),
             ],
           )
         ],
@@ -197,6 +210,7 @@ class _SignInState extends State<SignIn> {
             height: 10,
           ),
           TextFormField(
+            obscureText: label == '비밀번호' ? true : false,
             autovalidateMode: AutovalidateMode.always,
             onSaved: onSaved,
             validator: validator,

@@ -23,9 +23,8 @@ class _SignUpState extends State<SignUp> {
     var snack = ScaffoldMessenger.of(context);
     navFunction() {
       Navigator.pushNamedAndRemoveUntil(
-          context, '/MagicEyeView/NaviScreen', (route) => false);
+          context, '/Login/EmailVerify', (route) => false);
     }
-
     focusOut() {
       FocusScope.of(context).unfocus();
     }
@@ -222,6 +221,7 @@ class _SignUpState extends State<SignUp> {
             height: 10,
           ),
           TextFormField(
+            obscureText: label == '비밀번호' ? true : false,
             autovalidateMode: AutovalidateMode.always,
             onSaved: onSaved,
             validator: validator,

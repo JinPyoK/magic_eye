@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:magic_eye/Login/email_verify.dart';
+import 'package:magic_eye/Login/reset_password.dart';
 import 'home_screen.dart';
 import 'Login/signin.dart';
 import 'Login/signup.dart';
@@ -26,9 +28,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/Login/LoginMain' : (context) => const SignIn(),
         '/Login/SignUp' : (context) => const SignUp(),
+        '/Login/EmailVerify' : (context) => const EmailVerify(),
+        '/Login/ResetPassword' : (context) => const ResetPassword(),
         '/MagicEyeView/NaviScreen' : (context) => const NaviScreen(),
       },
-      home: isLogin() ? const NaviScreen() : const HomeScreen(),
+      home: isLogin() && isEmailVerified() ? const NaviScreen() : const HomeScreen(),
     );
   }
 }

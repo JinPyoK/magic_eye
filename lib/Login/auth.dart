@@ -5,9 +5,22 @@ String _errorCode = '';
 
 bool signUpLoading = false;
 bool signInLoading = false;
+bool emailVerifyLoading = false;
+bool updatePasswordLoading = false;
+bool resetPasswordLoading = false;
 
 String getUID() {
+  if (_auth.currentUser == null) {
+    throw Exception();
+  }
   return _auth.currentUser!.uid;
+}
+
+bool isEmailVerified() {
+  if (_auth.currentUser == null) {
+    return false;
+  }
+  return _auth.currentUser!.emailVerified;
 }
 
 bool isLogin() {
@@ -61,8 +74,36 @@ Future<String> signIn({required String email, required String password}) async {
   }
 }
 
+Future<void> emailVerify() async {
+  try {
+    await _auth.currentUser!.sendEmailVerification();
+  } on FirebaseAuthException catch (error) {
+    print("EmailVerify Error: ${error.code}");
+  }
+}
+
+Future<void> updatePassword({required String newPassword}) async {
+  try {
+    await _auth.currentUser!.updatePassword(newPassword);
+  } on FirebaseAuthException catch (error) {
+    print("UpdatePassword Error: ${error.code}");
+  }
+}
+
+Future<void> resetPassword({required String email}) async {
+  try {
+    await _auth.sendPasswordResetEmail(email: email);
+  } on FirebaseAuthException catch (error) {
+    print("ResetPassword Error: ${error.code}");
+  }
+}
+
 Future<void> signOut() async {
-  await _auth.signOut();
+  try {
+    await _auth.signOut();
+  } on FirebaseAuthException catch (error) {
+    print("SignOut Error: ${error.code}");
+  }
 }
 
 void confirm(){
@@ -70,5 +111,6 @@ void confirm(){
     print('null입니다');
   } else {
     print(_auth.currentUser!.uid);
+    print(_auth.currentUser!.emailVerified);
   }
 }
