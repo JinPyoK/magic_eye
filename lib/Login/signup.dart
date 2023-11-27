@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
-import 'auth.dart';
+import '../Firebase/auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

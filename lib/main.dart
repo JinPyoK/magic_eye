@@ -5,9 +5,9 @@ import 'home_screen.dart';
 import 'Login/signin.dart';
 import 'Login/signup.dart';
 import 'MagicEyeView/navi_screen.dart';
-import 'package:magic_eye/Login/auth.dart';
+import 'package:magic_eye/Firebase/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'Firebase/firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

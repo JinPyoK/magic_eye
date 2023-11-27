@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'auth.dart';
+import '../Firebase/auth.dart';
 
 class EmailVerify extends StatefulWidget {
   const EmailVerify({super.key});

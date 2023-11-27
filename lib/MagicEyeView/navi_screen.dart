@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Login/auth.dart';
+import '../Firebase/auth.dart';
 
 class NaviScreen extends StatelessWidget {
   const NaviScreen({super.key});
