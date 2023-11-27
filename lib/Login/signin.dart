@@ -21,17 +21,19 @@ class _SignInState extends State<SignIn> {
       Navigator.pushNamedAndRemoveUntil(
           context, '/MagicEyeView/NaviScreen', (route) => false);
     }
+
     nav2Function() {
-      Navigator.pushNamed(
-          context, '/Login/EmailVerify');
+      Navigator.pushNamed(context, '/Login/EmailVerify');
     }
+
     nav3Function() {
-      Navigator.pushNamed(
-          context, '/Login/ResetPassword');
+      Navigator.pushNamed(context, '/Login/ResetPassword');
     }
+
     focusOut() {
       FocusScope.of(context).unfocus();
     }
+
     var snack = ScaffoldMessenger.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -163,6 +165,30 @@ class _SignInState extends State<SignIn> {
           const SizedBox(
             height: 10,
           ),
+          ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(300, 60),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                )
+              ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Image.asset('assets/google_logo.png'),
+                    ),
+                    const Text("구글 계정으로 로그인", style: TextStyle(color: Color(0xff757575), fontSize: 16),),
+                  ],
+                ),
+              )),
+          const SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -174,9 +200,11 @@ class _SignInState extends State<SignIn> {
               const SizedBox(
                 width: 50,
               ),
-              TextButton(onPressed: () {
-                nav3Function();
-              }, child: const Text("비밀번호 초기화")),
+              TextButton(
+                  onPressed: () {
+                    nav3Function();
+                  },
+                  child: const Text("비밀번호 초기화")),
             ],
           )
         ],
