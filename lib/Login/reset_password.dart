@@ -142,7 +142,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             height: 10,
           ),
           TextFormField(
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             onSaved: onSaved,
             validator: validator,
             decoration: InputDecoration(

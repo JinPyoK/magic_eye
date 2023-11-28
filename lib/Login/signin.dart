@@ -254,7 +254,7 @@ class _SignInState extends State<SignIn> {
           ),
           TextFormField(
             obscureText: label == '비밀번호' ? true : false,
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             onSaved: onSaved,
             validator: validator,
             decoration: InputDecoration(

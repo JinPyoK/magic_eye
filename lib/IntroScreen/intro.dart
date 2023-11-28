@@ -17,16 +17,20 @@ class _IntroState extends State<Intro> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      opacity = 1;
-    });
-    Future.delayed(const Duration(seconds: 3), () {
-      if (isLogin() && isEmailVerified()) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/MagicEyeView/NaviScreen', (route) => false);
-      } else {
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/HomeScreen', (route) => false);
-      }
+      Future.delayed(const Duration(seconds: 3), () {
+        setState(() {
+          opacity = 1;
+        });
+        Future.delayed(const Duration(seconds: 3), () {
+          if (isLogin() && isEmailVerified()) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/MagicEyeView/NaviScreen', (route) => false);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/HomeScreen', (route) => false);
+          }
+        });
+      });
     });
   }
 

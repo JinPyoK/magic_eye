@@ -230,7 +230,7 @@ class _SignUpState extends State<SignUp> {
           ),
           TextFormField(
             obscureText: label == '비밀번호' ? true : false,
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             onSaved: onSaved,
             validator: validator,
             onTap: () {
