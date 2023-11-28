@@ -20,13 +20,24 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    var snack = ScaffoldMessenger.of(context);
     navFunction() {
       Navigator.pushNamedAndRemoveUntil(
           context, '/Login/EmailVerify', (route) => false);
     }
+
     focusOut() {
       FocusScope.of(context).unfocus();
+    }
+
+    renderSnackBar(String code) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.deepPurpleAccent,
+          content: Center(
+            child: Text(
+              code,
+              style: const TextStyle(color: Colors.white),
+            ),
+          )));
     }
 
     return Scaffold(
@@ -163,14 +174,7 @@ class _SignUpState extends State<SignUp> {
                       signUpLoading = false;
                     });
                     if (errorCode != '') {
-                      snack.showSnackBar(SnackBar(
-                          backgroundColor: Colors.deepPurpleAccent,
-                          content: Center(
-                            child: Text(
-                              errorCode,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          )));
+                      renderSnackBar(errorCode);
                     } else {
                       navFunction();
                     }
@@ -186,7 +190,11 @@ class _SignUpState extends State<SignUp> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                child: signUpLoading ? const CircularProgressIndicator(color: Colors.white,) : const Text("회원가입"),
+                child: signUpLoading
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : const Text("회원가입"),
               ),
             ],
           ),

@@ -124,13 +124,14 @@ Future<void> updatePassword({required String newPassword}) async {
   }
 }
 
-Future<void> resetPassword({required String email}) async {
+Future<String> resetPassword({required String email}) async {
   try {
-    if (_auth.currentUser != null) {
-      await _auth.sendPasswordResetEmail(email: email);
-    }
-  } on FirebaseAuthException catch (_) {
-    return;
+    await _auth.sendPasswordResetEmail(email: email);
+    _errorCode = '';
+    return _errorCode;
+  } on FirebaseAuthException catch (error) {
+    _errorCode = error.code;
+    return _errorCode;
   }
 }
 

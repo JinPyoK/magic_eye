@@ -19,7 +19,17 @@ class _ResetPasswordState extends State<ResetPassword> {
     focusOut() {
       FocusScope.of(context).unfocus();
     }
-    var snack = ScaffoldMessenger.of(context);
+
+    renderSnackBar(String code) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.deepPurpleAccent,
+          content: Center(
+            child: Text(
+              code,
+              style: const TextStyle(color: Colors.white),
+            ),
+          )));
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -61,7 +71,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                       ),
                     ],
                   )),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
@@ -70,9 +82,12 @@ class _ResetPasswordState extends State<ResetPassword> {
                       resetPasswordLoading = true;
                     });
                     focusOut();
-                    await resetPassword(email: email);
-                    snack.showSnackBar(const SnackBar(backgroundColor: Colors.deepPurpleAccent,
-                        content: Text("이메일을 확인하여 비밀번호 초기화를 진행하세요", style: TextStyle(color: Colors.white, fontSize: 16))));
+                    var errorCode = await resetPassword(email: email);
+                    if (errorCode != '') {
+                      renderSnackBar(errorCode);
+                    } else {
+                      renderSnackBar("이메일을 확인하여 비밀번호 초기화를 진행하세요");
+                    }
                     setState(() {
                       resetPasswordLoading = false;
                     });
@@ -81,8 +96,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff7C72EC),
                   foregroundColor: Colors.white,
-                  textStyle:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  textStyle: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                   fixedSize: const Size(300, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
@@ -90,8 +105,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                 ),
                 child: resetPasswordLoading
                     ? const CircularProgressIndicator(
-                  color: Colors.white,
-                )
+                        color: Colors.white,
+                      )
                     : const Text("비밀번호 초기화"),
               ),
             ],
@@ -133,7 +148,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             decoration: InputDecoration(
               hintText: hint,
               contentPadding:
-              const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               border: const OutlineInputBorder(),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(

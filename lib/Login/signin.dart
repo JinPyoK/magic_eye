@@ -34,7 +34,17 @@ class _SignInState extends State<SignIn> {
       FocusScope.of(context).unfocus();
     }
 
-    var snack = ScaffoldMessenger.of(context);
+    renderSnackBar(String code) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.deepPurpleAccent,
+          content: Center(
+            child: Text(
+              code,
+              style: const TextStyle(color: Colors.white),
+            ),
+          )));
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -101,14 +111,7 @@ class _SignInState extends State<SignIn> {
                   signInLoading = false;
                 });
                 if (errorCode != '') {
-                  snack.showSnackBar(SnackBar(
-                      backgroundColor: Colors.deepPurpleAccent,
-                      content: Center(
-                        child: Text(
-                          errorCode,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      )));
+                  renderSnackBar(errorCode);
                 } else {
                   if (isEmailVerified()) {
                     nav1Function();
@@ -170,12 +173,7 @@ class _SignInState extends State<SignIn> {
                 var errorCode = await signInWithGoogle();
 
                 if (errorCode != '') {
-                  snack.showSnackBar(SnackBar(
-                      backgroundColor: Colors.deepPurpleAccent,
-                      content: Text(
-                        errorCode,
-                        style: const TextStyle(color: Colors.white),
-                      )));
+                  renderSnackBar(errorCode);
                   return;
                 } else {
                   googleLogin = true;
