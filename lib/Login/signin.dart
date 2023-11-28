@@ -166,13 +166,27 @@ class _SignInState extends State<SignIn> {
             height: 10,
           ),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                var errorCode = await signInWithGoogle();
+
+                if (errorCode != '') {
+                  snack.showSnackBar(SnackBar(
+                      backgroundColor: Colors.deepPurpleAccent,
+                      content: Text(
+                        errorCode,
+                        style: const TextStyle(color: Colors.white),
+                      )));
+                  return;
+                } else {
+                  googleLogin = true;
+                  nav1Function();
+                }
+              },
               style: ElevatedButton.styleFrom(
-                fixedSize: const Size(300, 60),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                )
-              ),
+                  fixedSize: const Size(300, 60),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  )),
               child: Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -182,7 +196,10 @@ class _SignInState extends State<SignIn> {
                       height: 50,
                       child: Image.asset('assets/google_logo.png'),
                     ),
-                    const Text("구글 계정으로 로그인", style: TextStyle(color: Color(0xff757575), fontSize: 16),),
+                    const Text(
+                      "구글 계정으로 로그인",
+                      style: TextStyle(color: Color(0xff757575), fontSize: 16),
+                    ),
                   ],
                 ),
               )),

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 String _errorCode = '';
@@ -8,6 +9,8 @@ bool signInLoading = false;
 bool emailVerifyLoading = false;
 bool updatePasswordLoading = false;
 bool resetPasswordLoading = false;
+
+bool googleLogin = false;
 
 String getUID() {
   if (_auth.currentUser == null) {
@@ -33,8 +36,9 @@ bool isLogin() {
 
 Future<String> signUp({required String email, required String password}) async {
   try {
-    UserCredential usercred = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    if (usercred == null) {
+    UserCredential userCred = await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    if (userCred == null) {
       _errorCode = '서버에 문제가 생겼습니다.';
       return _errorCode;
     }
@@ -62,8 +66,9 @@ Future<String> signUp({required String email, required String password}) async {
 
 Future<String> signIn({required String email, required String password}) async {
   try {
-    UserCredential usercred = await _auth.signInWithEmailAndPassword(email: email, password: password);
-    if (usercred == null) {
+    UserCredential userCred = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
+    if (userCred == null) {
       _errorCode = '서버에 문제가 생겼습니다.';
       return _errorCode;
     }
@@ -74,13 +79,38 @@ Future<String> signIn({required String email, required String password}) async {
   }
 }
 
+Future<String> signInWithGoogle() async {
+  // Trigger the authentication flow
+  try {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    await _auth.signInWithCredential(credential);
+
+    _errorCode = '';
+    return _errorCode;
+  } on Exception catch (_) {
+    _errorCode = '구글 로그인 오류';
+    return _errorCode;
+  }
+}
+
 Future<void> emailVerify() async {
   try {
     if (_auth.currentUser != null) {
       await _auth.currentUser!.sendEmailVerification();
     }
-  } on FirebaseAuthException catch (error) {
-    print("EmailVerify Error: ${error.code}");
+  } on FirebaseAuthException catch (_) {
+    return;
   }
 }
 
@@ -89,8 +119,8 @@ Future<void> updatePassword({required String newPassword}) async {
     if (_auth.currentUser != null) {
       await _auth.currentUser!.updatePassword(newPassword);
     }
-  } on FirebaseAuthException catch (error) {
-    print("UpdatePassword Error: ${error.code}");
+  } on FirebaseAuthException catch (_) {
+    return;
   }
 }
 
@@ -99,8 +129,8 @@ Future<void> resetPassword({required String email}) async {
     if (_auth.currentUser != null) {
       await _auth.sendPasswordResetEmail(email: email);
     }
-  } on FirebaseAuthException catch (error) {
-    print("ResetPassword Error: ${error.code}");
+  } on FirebaseAuthException catch (_) {
+    return;
   }
 }
 
@@ -109,12 +139,17 @@ Future<void> signOut() async {
     if (_auth.currentUser != null) {
       await _auth.signOut();
     }
-  } on FirebaseAuthException catch (error) {
-    print("SignOut Error: ${error.code}");
+    if (googleLogin) {
+      await GoogleSignIn().disconnect();
+      await GoogleSignIn().signOut();
+      googleLogin = false;
+    }
+  } on FirebaseAuthException catch (_) {
+    return;
   }
 }
 
-void confirm(){
+void confirm() {
   if (_auth.currentUser == null) {
     print('null입니다');
   } else {
