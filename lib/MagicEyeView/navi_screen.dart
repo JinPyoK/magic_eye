@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:magic_eye/MagicEyeView/cctv_screen.dart';
-import 'package:magic_eye/MagicEyeView/my_page_screen.dart';
-import 'package:magic_eye/MagicEyeView/record_screen.dart';
+import 'package:magic_eye/MagicEyeView/CCTVScreen/cctv_screen.dart';
+import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_screen.dart';
+import 'package:magic_eye/MagicEyeView/RecordScreen/record_screen.dart';
 
 class NaviScreen extends StatefulWidget {
   const NaviScreen({super.key});
