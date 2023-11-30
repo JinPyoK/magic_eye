@@ -27,70 +27,17 @@ class _MenuSettingState extends State<MenuSetting> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
                     height: height / 18,
                   ),
-                  Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          renderTextFormField(
-                            width: width,
-                            label: '이름',
-                            hint: 'CCTV의 이름을 정해주세요',
-                            onSaved: (val) {
-                              name = val;
-                            },
-                            validator: (val) {
-                              if (val.length < 1) {
-                                return '필수 사항입니다.';
-                              }
-                              return null;
-                            },
-                          ),
-                          renderTextFormField(
-                            width: width,
-                            label: 'IP',
-                            hint: 'CCTV의 IP주소를 입력해주세요.',
-                            onSaved: (val) {
-                              ip = val;
-                            },
-                            validator: (val) {
-                              if (val.length < 1) {
-                                return '필수 사항입니다.';
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
-                      )),
+                  renderAddCCTVForm(width, height),
                   SizedBox(
-                    width: width / 1.5,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text("나가기")),
-                        ElevatedButton(
-                            onPressed: () {
-                              FocusScope.of(context).unfocus();
-                              if (formKey.currentState!.validate()) {
-                                formKey.currentState!.save();
-                                context.read<CCTVProvider>().addMenu(name, ip);
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: const Text("CCTV 추가")),
-                      ],
-                    ),
-                  )
+                    height: height / 15,
+                  ),
+                  renderDeleteCCTV(width, height)
                 ],
-              ),
+              )
             ],
           );
         },
@@ -142,6 +89,97 @@ class _MenuSettingState extends State<MenuSetting> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  renderAddCCTVForm(double width, double height) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Form(
+            key: formKey,
+            child: Column(
+              children: [
+                renderTextFormField(
+                  width: width,
+                  label: '이름',
+                  hint: 'CCTV의 이름을 정해주세요',
+                  onSaved: (val) {
+                    name = val;
+                  },
+                  validator: (val) {
+                    if (val.length < 1) {
+                      return '필수 사항입니다.';
+                    }
+                    return null;
+                  },
+                ),
+                renderTextFormField(
+                  width: width,
+                  label: 'IP',
+                  hint: 'CCTV의 IP주소를 입력해주세요.',
+                  onSaved: (val) {
+                    ip = val;
+                  },
+                  validator: (val) {
+                    if (val.length < 1) {
+                      return '필수 사항입니다.';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            )),
+        SizedBox(
+          width: width / 1.5,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("나가기")),
+              ElevatedButton(
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      context.read<CCTVProvider>().addMenu(name, ip);
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text("CCTV 추가")),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  renderDeleteCCTV(double width, double height) {
+    renderListTile(String cam) {
+      return Card(
+        child: ListTile(
+          title: Text(cam),
+          trailing: const Icon(Icons.delete_forever_outlined),
+          onTap: () {
+            context.read<CCTVProvider>().deleteMenu(cam);
+          },
+        ),
+      );
+    }
+
+    return SizedBox(
+      width: width / 1.2,
+      height: height / 3,
+      child: ListView(
+        children: context
+            .watch<CCTVProvider>()
+            .menu
+            .map((cam) => renderListTile(cam))
+            .toList(),
       ),
     );
   }

@@ -13,6 +13,7 @@ class CCTVScreen extends StatelessWidget {
       providers: [ChangeNotifierProvider(create: (_) => CCTVProvider())],
       child: MaterialApp(
         home: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: LayoutBuilder(builder: (_, box) {
             final width = box.maxWidth;
             final height = box.maxHeight;
