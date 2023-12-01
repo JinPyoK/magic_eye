@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../Firebase/auth.dart';
 
 class EmailVerify extends StatefulWidget {
@@ -13,7 +14,7 @@ class _EmailVerifyState extends State<EmailVerify> {
   Widget build(BuildContext context) {
     navFunction() {
       Navigator.pushNamedAndRemoveUntil(
-          context, '/MagicEyeView/NaviScreen', (route) => false);
+          context, '/Login/SignIn', (route) => false);
     }
 
     renderSnackBar(String code) {
@@ -71,12 +72,15 @@ class _EmailVerifyState extends State<EmailVerify> {
               height: 50,
             ),
             ElevatedButton(
-                onPressed: () {
-                  if (isEmailVerified()) {
-                    navFunction();
-                  } else {
-                    renderSnackBar("이메일 인증이 진행되지 않았습니다");
-                  }
+                onPressed: () async {
+                  setState(() {
+                    signOutLoading = true;
+                  });
+                  await signOut();
+                  setState(() {
+                    signOutLoading = false;
+                  });
+                  navFunction();
                 },
                 style: ElevatedButton.styleFrom(
                     fixedSize: const Size(200, 50),
@@ -84,10 +88,14 @@ class _EmailVerifyState extends State<EmailVerify> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     )),
-                child: const Text(
-                  "접속",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ))
+                child: signOutLoading
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : const Text(
+                        "로그인",
+                        style: TextStyle(color: Colors.white, fontSize: 22),
+                      ))
           ],
         ),
       ],

@@ -6,9 +6,11 @@ String _errorCode = '';
 
 bool signUpLoading = false;
 bool signInLoading = false;
+bool signOutLoading = false;
 bool emailVerifyLoading = false;
 bool updatePasswordLoading = false;
 bool resetPasswordLoading = false;
+bool updateDisplayNameLoading = false;
 
 bool googleLogin = false;
 
@@ -42,7 +44,10 @@ bool isLogin() {
   }
 }
 
-Future<String> signUp({required String email, required String password}) async {
+Future<String> signUp(
+    {required String email,
+    required String password,
+    required String displayName}) async {
   try {
     UserCredential userCred = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
@@ -50,6 +55,7 @@ Future<String> signUp({required String email, required String password}) async {
       _errorCode = '서버에 문제가 생겼습니다.';
       return _errorCode;
     }
+    await updateDisplayName(newDisplayName: displayName);
     return '';
   } on FirebaseAuthException catch (error) {
     switch (error.code) {
@@ -156,4 +162,12 @@ Future<void> signOut() async {
   } on FirebaseAuthException catch (_) {
     return;
   }
+}
+
+Future<void> updateDisplayName({required String newDisplayName}) async {
+  await _auth.currentUser!.updateDisplayName(newDisplayName);
+}
+
+void confirm() {
+  print(_auth.currentUser!.emailVerified);
 }

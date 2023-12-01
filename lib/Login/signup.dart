@@ -15,7 +15,7 @@ class _SignUpState extends State<SignUp> {
   String email = '';
   String password = '';
   String passwordConfirm = '';
-  String name = '';
+  String displayName = '';
   String storeNumber = '';
 
   @override
@@ -127,7 +127,7 @@ class _SignUpState extends State<SignUp> {
                         hint: '예) 홍길동',
                         onSaved: (val) {
                           setState(() {
-                            name = val;
+                            displayName = val;
                           });
                         },
                         validator: (val) {
@@ -168,8 +168,10 @@ class _SignUpState extends State<SignUp> {
                     setState(() {
                       signUpLoading = true;
                     });
-                    var errorCode =
-                        await signUp(email: email, password: password);
+                    var errorCode = await signUp(
+                        email: email,
+                        password: password,
+                        displayName: displayName);
                     setState(() {
                       signUpLoading = false;
                     });
