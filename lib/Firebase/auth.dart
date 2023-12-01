@@ -11,8 +11,12 @@ bool emailVerifyLoading = false;
 bool updatePasswordLoading = false;
 bool resetPasswordLoading = false;
 bool updateDisplayNameLoading = false;
+bool emailVerifiedAndLoginLoading = false;
 
 bool googleLogin = false;
+
+String _tempEmail = '';
+String _tempPassword = '';
 
 String getUID() {
   if (_auth.currentUser == null) {
@@ -44,6 +48,18 @@ bool isLogin() {
   }
 }
 
+Future<bool> emailVerifiedAndLogin() async {
+  await signOut();
+  await signIn(email: _tempEmail, password: _tempPassword);
+  if (isEmailVerified()) {
+    _tempEmail = '';
+    _tempPassword = '';
+    return true;
+  } else {
+    return false;
+  }
+}
+
 Future<String> signUp(
     {required String email,
     required String password,
@@ -56,6 +72,8 @@ Future<String> signUp(
       return _errorCode;
     }
     await updateDisplayName(newDisplayName: displayName);
+    _tempEmail = email;
+    _tempPassword = password;
     return '';
   } on FirebaseAuthException catch (error) {
     switch (error.code) {
@@ -85,6 +103,10 @@ Future<String> signIn({required String email, required String password}) async {
     if (userCred == null) {
       _errorCode = '서버에 문제가 생겼습니다.';
       return _errorCode;
+    }
+    if (!isEmailVerified()) {
+      _tempEmail = email;
+      _tempPassword = password;
     }
     return '';
   } on FirebaseAuthException catch (error) {

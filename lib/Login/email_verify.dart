@@ -14,7 +14,7 @@ class _EmailVerifyState extends State<EmailVerify> {
   Widget build(BuildContext context) {
     navFunction() {
       Navigator.pushNamedAndRemoveUntil(
-          context, '/Login/SignIn', (route) => false);
+          context, '/MagicEyeView/NaviScreen', (route) => false);
     }
 
     renderSnackBar(String code) {
@@ -74,13 +74,17 @@ class _EmailVerifyState extends State<EmailVerify> {
             ElevatedButton(
                 onPressed: () async {
                   setState(() {
-                    signOutLoading = true;
+                    emailVerifiedAndLoginLoading = true;
                   });
-                  await signOut();
+                  bool result = await emailVerifiedAndLogin();
                   setState(() {
-                    signOutLoading = false;
+                    emailVerifiedAndLoginLoading = false;
                   });
-                  navFunction();
+                  if (result) {
+                    navFunction();
+                  } else {
+                    renderSnackBar("이메일이 인증되지 않았습니다");
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     fixedSize: const Size(200, 50),
@@ -88,12 +92,12 @@ class _EmailVerifyState extends State<EmailVerify> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     )),
-                child: signOutLoading
+                child: emailVerifiedAndLoginLoading
                     ? const CircularProgressIndicator(
                         color: Colors.white,
                       )
                     : const Text(
-                        "로그인",
+                        "접속",
                         style: TextStyle(color: Colors.white, fontSize: 22),
                       ))
           ],
