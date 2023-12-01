@@ -142,6 +142,8 @@ class _MenuSettingState extends State<MenuSetting> {
                   },
                   child: const Text("나가기")),
               ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightBlueAccent),
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     if (formKey.currentState!.validate()) {
@@ -150,7 +152,10 @@ class _MenuSettingState extends State<MenuSetting> {
                       Navigator.pop(context);
                     }
                   },
-                  child: const Text("CCTV 추가")),
+                  child: const Text(
+                    "CCTV 추가",
+                    style: TextStyle(color: Colors.white),
+                  )),
             ],
           ),
         )

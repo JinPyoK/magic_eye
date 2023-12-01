@@ -19,6 +19,14 @@ String getUID() {
   return _auth.currentUser!.uid;
 }
 
+String getDisplayName() {
+  if (_auth.currentUser != null) {
+    return _auth.currentUser!.displayName!;
+  } else {
+    return '';
+  }
+}
+
 bool isEmailVerified() {
   if (_auth.currentUser == null) {
     return false;
@@ -147,14 +155,5 @@ Future<void> signOut() async {
     }
   } on FirebaseAuthException catch (_) {
     return;
-  }
-}
-
-void confirm() {
-  if (_auth.currentUser == null) {
-    print('null입니다');
-  } else {
-    print(_auth.currentUser!.uid);
-    print(_auth.currentUser!.emailVerified);
   }
 }

@@ -3,6 +3,7 @@ import 'drop_down_box.dart';
 import 'package:provider/provider.dart';
 import 'cctv_provider.dart';
 import 'cctv_view.dart';
+import 'package:magic_eye/Firebase/auth.dart';
 
 class CCTVScreen extends StatelessWidget {
   const CCTVScreen({super.key});
@@ -27,7 +28,7 @@ class CCTVScreen extends StatelessWidget {
                         height: height / 25,
                       ),
                       renderMainBar(width),
-                      renderIntroduce(width, "가천대학교"),
+                      renderIntroduce(width, getDisplayName()),
                       const SizedBox(
                         height: 20,
                       ),
@@ -93,9 +94,21 @@ renderIntroduce(double width, String name) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "$name님, 반가워요!",
-          style: textStyle,
+        Row(
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(minWidth: 0, maxWidth: width / 2.5),
+              child: Text(
+                name,
+                style: textStyle,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const Text(
+              "님, 반가워요!",
+              style: textStyle,
+            )
+          ],
         ),
         const Text(
           "어느 곳을 보실래요?",

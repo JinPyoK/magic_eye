@@ -36,8 +36,10 @@ class _MenuState extends State<Menu> {
           )
         : ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepPurpleAccent,
-              fixedSize: Size(widget.width / 1.4, 50),
+              backgroundColor: const Color(0xff7C72EC),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              fixedSize: Size(widget.width / 1.1, 50),
             ),
             onPressed: () {
               Navigator.push(
