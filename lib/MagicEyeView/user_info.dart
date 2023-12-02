@@ -13,17 +13,17 @@ class UserInfo {
 
   factory UserInfo.fromJson(Map<dynamic, dynamic> json) {
     return UserInfo(
-      storeNumber: json["storeNumber"],
-      cctvs: json["cctvs"],
-      anormals: json["anormals"],
+      storeNumber: json["storeNumber"] ?? '',
+      cctvs: json["cctvs"] ?? [],
+      anormals: json["anormals"] ?? [],
     );
   }
 
   factory UserInfo.fromNull() {
     return const UserInfo(
       storeNumber: '',
-      cctvs: <dynamic>[],
-      anormals: <dynamic>[],
+      cctvs: [],
+      anormals: [],
     );
   }
 

@@ -12,7 +12,7 @@ class CCTVProvider extends ChangeNotifier {
   final _dio = Dio();
 
   void changeAPI(String api) {
-    _connectAPI = cctvs[cctvs.indexWhere((cctv) => cctv['name'] == api)]['ip'];
+    _connectAPI = cctvss[cctvs.indexWhere((cctv) => cctv['name'] == api)]['ip'];
     notifyListeners();
   }
 

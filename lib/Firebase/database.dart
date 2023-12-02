@@ -16,7 +16,6 @@ Future<UserInfo> getDB() async {
   try {
     var snapshot = await _db.ref().child("users").child(getUID()).get();
     if (snapshot.value == null) {
-      print("sadfasdf");
       return UserInfo.fromNull();
     }
     Map<dynamic, dynamic> values = snapshot.value as Map<dynamic, dynamic>;
@@ -24,9 +23,4 @@ Future<UserInfo> getDB() async {
   } on Exception catch (_) {
     return UserInfo.fromNull();
   }
-}
-
-Future<void> testDB() async {
-  var snapshot = await _db.ref().child("asdfsadf").child(getUID()).get();
-  print(snapshot.value);
 }
