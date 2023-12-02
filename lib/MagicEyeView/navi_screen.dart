@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/CCTVScreen/cctv_screen.dart';
 import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_screen.dart';
 import 'package:magic_eye/MagicEyeView/RecordScreen/record_screen.dart';
+import 'package:magic_eye/MagicEyeView/user_info.dart';
+import 'package:magic_eye/MagicEyeView/CCTVScreen/cctv_provider.dart';
 
 class NaviScreen extends StatefulWidget {
   const NaviScreen({super.key});
@@ -25,29 +27,59 @@ class _NaviScreenState extends State<NaviScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getUserInfo();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.screenshot_monitor_rounded),
-            label: 'CCTV',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.document_scanner_outlined),
-            label: 'Record',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.face),
-            label: 'MY',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurpleAccent,
-        onTap: _onItemTapped,
-      ),
-    );
+    return FutureBuilder(
+        future: user,
+        builder: (_, snapshot) {
+          if (!snapshot.hasData) {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return const Scaffold(
+              body: Center(
+                child: Text("오류 발생"),
+              ),
+            );
+          } else {
+            cctvs = List.from(snapshot.data!.toJson()['cctvs']);
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              body: IndexedStack(
+                index: _selectedIndex,
+                children: _widgetOptions,
+              ),
+              bottomNavigationBar: BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.screenshot_monitor_rounded),
+                    label: 'CCTV',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.document_scanner_outlined),
+                    label: 'Record',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.face),
+                    label: 'MY',
+                  ),
+                ],
+                currentIndex: _selectedIndex,
+                selectedItemColor: Colors.deepPurpleAccent,
+                onTap: _onItemTapped,
+              ),
+            );
+          }
+        });
   }
 }

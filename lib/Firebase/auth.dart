@@ -187,7 +187,11 @@ Future<void> signOut() async {
 }
 
 Future<void> updateDisplayName({required String newDisplayName}) async {
-  await _auth.currentUser!.updateDisplayName(newDisplayName);
+  try {
+    await _auth.currentUser!.updateDisplayName(newDisplayName);
+  } on Exception catch (_) {
+    return;
+  }
 }
 
 void confirm() {

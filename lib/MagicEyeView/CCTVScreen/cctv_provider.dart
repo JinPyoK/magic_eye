@@ -1,29 +1,34 @@
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
+import 'package:magic_eye/Firebase/database.dart';
+
+late List<dynamic> cctvs;
 
 class CCTVProvider extends ChangeNotifier {
-  List<String> menu = ['카메라1', '카메라2'];
-  List<String> _api = ['192.168.12.15:8000', '192.168.223.87:8000'];
+  List<dynamic> cctvss = cctvs;
+  List<String> menu = cctvs.map((cctv) => cctv['name'] as String).toList();
 
   String _connectAPI = '';
   final _dio = Dio();
 
   void changeAPI(String api) {
-    _connectAPI = _api[menu.indexOf(api)];
+    _connectAPI = cctvs[cctvs.indexWhere((cctv) => cctv['name'] == api)]['ip'];
     notifyListeners();
   }
 
   void addMenu(String newMenu, String newApi) {
+    cctvss.insert(0, {"name": newMenu, "ip": newApi});
     menu.insert(0, newMenu);
-    _api.insert(0, newApi);
+    updateDB({"cctvs": cctvss});
     _connectAPI = newApi;
     notifyListeners();
   }
 
   void deleteMenu(String deleteMenu) {
     int deleteIndex = menu.indexOf(deleteMenu);
-    _api.removeAt(deleteIndex);
     menu.removeAt(deleteIndex);
+    cctvss.removeAt(deleteIndex);
+    updateDB({"cctvs": cctvss});
     notifyListeners();
   }
 
