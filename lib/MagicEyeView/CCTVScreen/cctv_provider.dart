@@ -2,24 +2,25 @@ import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import 'package:magic_eye/Firebase/database.dart';
 
-late List<dynamic> cctvs;
+late List<dynamic> cctvsFromJson;
 
 class CCTVProvider extends ChangeNotifier {
-  List<dynamic> cctvss = cctvs;
-  List<String> menu = cctvs.map((cctv) => cctv['name'] as String).toList();
+  List<dynamic> cctvs = cctvsFromJson;
+  List<String> menu =
+      cctvsFromJson.map((cctv) => cctv['name'] as String).toList();
 
   String _connectAPI = '';
   final _dio = Dio();
 
   void changeAPI(String api) {
-    _connectAPI = cctvss[cctvs.indexWhere((cctv) => cctv['name'] == api)]['ip'];
+    _connectAPI = cctvs[cctvs.indexWhere((cctv) => cctv['name'] == api)]['ip'];
     notifyListeners();
   }
 
   void addMenu(String newMenu, String newApi) {
-    cctvss.insert(0, {"name": newMenu, "ip": newApi});
+    cctvs.insert(0, {"name": newMenu, "ip": newApi});
     menu.insert(0, newMenu);
-    updateDB({"cctvs": cctvss});
+    updateDB({"cctvs": cctvs});
     _connectAPI = newApi;
     notifyListeners();
   }
@@ -27,8 +28,8 @@ class CCTVProvider extends ChangeNotifier {
   void deleteMenu(String deleteMenu) {
     int deleteIndex = menu.indexOf(deleteMenu);
     menu.removeAt(deleteIndex);
-    cctvss.removeAt(deleteIndex);
-    updateDB({"cctvs": cctvss});
+    cctvs.removeAt(deleteIndex);
+    updateDB({"cctvs": cctvs});
     notifyListeners();
   }
 

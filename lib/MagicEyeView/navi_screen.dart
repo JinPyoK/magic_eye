@@ -4,6 +4,7 @@ import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_screen.dart';
 import 'package:magic_eye/MagicEyeView/RecordScreen/record_screen.dart';
 import 'package:magic_eye/MagicEyeView/user_info.dart';
 import 'package:magic_eye/MagicEyeView/CCTVScreen/cctv_provider.dart';
+import 'package:magic_eye/MagicEyeView/RecordScreen/record_provider.dart';
 
 class NaviScreen extends StatefulWidget {
   const NaviScreen({super.key});
@@ -52,7 +53,9 @@ class _NaviScreenState extends State<NaviScreen> {
               ),
             );
           } else {
-            cctvs = List.from(snapshot.data!.toJson()['cctvs']);
+            var json = snapshot.data!.toJson();
+            cctvsFromJson = List.from(json['cctvs']);
+            recordsFromJson = List.from(json['anormals']);
             return Scaffold(
               resizeToAvoidBottomInset: false,
               body: IndexedStack(
