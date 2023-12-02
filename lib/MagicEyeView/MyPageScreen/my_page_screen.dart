@@ -38,11 +38,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         color: Colors.black,
                       )
                     : const Text("로그아웃")),
-            ElevatedButton(
-                onPressed: () async {
-                  confirm();
-                },
-                child: const Text("확인")),
           ],
         ),
       ),

@@ -193,7 +193,3 @@ Future<void> updateDisplayName({required String newDisplayName}) async {
     return;
   }
 }
-
-void confirm() {
-  print(_auth.currentUser!.emailVerified);
-}
