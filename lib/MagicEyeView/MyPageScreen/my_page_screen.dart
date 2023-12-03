@@ -52,17 +52,17 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       {
                         'date': "2023-09-18 09:45",
                         'type': 'occupy',
-                        'video': 'videoURL1'
+                        'videoURL': 'videoURL1'
                       },
                       {
                         'date': "2023-05-23 17:12",
                         'type': 'theft',
-                        'video': 'videoURL2'
+                        'videoURL': 'videoURL2'
                       },
                       {
                         'date': "2022-07-02 15:36",
                         'type': 'break',
-                        'video': 'videoURL3'
+                        'videoURL': 'videoURL3'
                       },
                     ]
                   });

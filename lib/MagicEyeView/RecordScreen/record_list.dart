@@ -23,7 +23,7 @@ class RecordList extends StatelessWidget {
               return RecordItem(
                   date: recordData[index]['date'] ?? '',
                   type: recordData[index]['type'] ?? '',
-                  videoURL: recordData[index]['video'] ?? '');
+                  videoURL: recordData[index]['videoURL'] ?? '');
             }),
       );
     });
