@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/RecordScreen/record_list.dart';
 import 'package:provider/provider.dart';
 import 'record_provider.dart';
+import 'record_main_bar.dart';
 
 class RecordScreen extends StatelessWidget {
   const RecordScreen({super.key});
@@ -24,14 +25,7 @@ class RecordScreen extends StatelessWidget {
                       SizedBox(
                         height: height / 25,
                       ),
-                      SizedBox(
-                        width: width / 1.2,
-                        child: const Text(
-                          "영상 기록",
-                          style: TextStyle(
-                              fontSize: 36, fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                      RecordMainBar(width),
                       SizedBox(
                         height: height / 30,
                       ),

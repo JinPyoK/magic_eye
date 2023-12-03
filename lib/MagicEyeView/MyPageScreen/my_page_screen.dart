@@ -41,26 +41,24 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       )
                     : const Text("로그아웃")),
             ElevatedButton(
-                onPressed: () {
-                  print(recordsFromJson);
-                },
-                child: const Text("확인 출력")),
-            ElevatedButton(
                 onPressed: () async {
                   await updateDB({
                     'anormals': [
                       {
                         'date': "2023-09-18 09:45",
+                        'cam': "cam1",
                         'type': 'occupy',
                         'videoURL': 'videoURL1'
                       },
                       {
                         'date': "2023-05-23 17:12",
+                        'cam': "cam1",
                         'type': 'theft',
                         'videoURL': 'videoURL2'
                       },
                       {
                         'date': "2022-07-02 15:36",
+                        'cam': "cam2",
                         'type': 'break',
                         'videoURL': 'videoURL3'
                       },
