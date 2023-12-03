@@ -13,18 +13,21 @@ class RecordList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       List<dynamic> recordData = context.watch<RecordProvider>().records;
-      return Container(
+      return SizedBox(
         width: width / 1.2,
         height: height / 1.4,
-        decoration: BoxDecoration(border: Border.all()),
-        child: ListView.builder(
-            itemCount: recordData.length,
-            itemBuilder: (context, index) {
-              return RecordItem(
-                  date: recordData[index]['date'] ?? '',
-                  type: recordData[index]['type'] ?? '',
-                  videoURL: recordData[index]['videoURL'] ?? '');
-            }),
+        child: ListView.separated(
+          itemCount: recordData.length,
+          itemBuilder: (context, index) {
+            return RecordItem(
+                date: recordData[index]['date'] ?? '',
+                type: recordData[index]['type'] ?? '',
+                videoURL: recordData[index]['videoURL'] ?? '');
+          },
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 10,
+          ),
+        ),
       );
     });
   }
