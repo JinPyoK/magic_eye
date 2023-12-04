@@ -30,6 +30,10 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
         theftAlarm = data.theftAlarm ?? false;
         breakAlarm = data.breakAlarm ?? false;
 
+        if (occupyAlarm || theftAlarm || breakAlarm) {
+          entireAlarm = true;
+        }
+
         return Container(
           width: widget.width / 1.2,
           height: widget.height / 2.2,
