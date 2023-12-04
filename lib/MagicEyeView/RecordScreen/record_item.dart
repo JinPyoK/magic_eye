@@ -87,7 +87,7 @@ renderTitle(double width, String type, String cam, TextStyle style) {
     color = Colors.lightBlueAccent;
   } else if (type == 'theft') {
     typeString = '도난';
-    color = Colors.yellowAccent;
+    color = Colors.yellow;
   } else if (type == 'break') {
     typeString = '파손';
     color = Colors.redAccent;

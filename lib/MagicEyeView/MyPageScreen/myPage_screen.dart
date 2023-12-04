@@ -33,7 +33,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     ),
                     MyPageUserInfo(width, height),
                     const SizedBox(height: 10),
-                    PieChart(width, height),
+                    MyPagePieChart(width, height),
                   ],
                 )
               ],
