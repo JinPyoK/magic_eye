@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:magic_eye/MagicEyeView/MyPageScreen/myPage_PieChart.dart';
 import 'package:magic_eye/MagicEyeView/MyPageScreen/myPage_mainBar.dart';
 import 'package:magic_eye/MagicEyeView/MyPageScreen/myPage_userInfo.dart';
 
@@ -30,7 +31,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     SizedBox(
                       height: height / 25,
                     ),
-                    MyPageUserInfo(width, height)
+                    MyPageUserInfo(width, height),
+                    const SizedBox(height: 10),
+                    PieChart(width, height),
                   ],
                 )
               ],
