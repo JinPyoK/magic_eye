@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:magic_eye/Firebase/auth.dart';
-import 'package:magic_eye/MagicEyeView/RecordScreen/record_provider.dart';
 import 'package:magic_eye/Firebase/database.dart';
 
 class MyPageScreen extends StatefulWidget {

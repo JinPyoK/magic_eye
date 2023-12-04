@@ -23,6 +23,7 @@ class RecordItem extends StatefulWidget {
 class _RecordItemState extends State<RecordItem> {
   TextStyle style = const TextStyle(fontWeight: FontWeight.bold);
   late ExpansionTileController _controller;
+  bool expansionOn = false;
 
   @override
   void initState() {
@@ -46,8 +47,18 @@ class _RecordItemState extends State<RecordItem> {
                 controller: _controller,
                 title: renderTitle(width, widget.type, widget.cam, style),
                 subtitle: renderSubTitle(width, widget.date, widget.cam, style),
-                trailing: renderDeleteButton(context, widget.date, widget.cam,
-                    widget.type, widget.videoURL, _controller),
+                trailing: expansionOn
+                    ? renderDeleteButton(context, widget.date, widget.cam,
+                        widget.type, widget.videoURL, _controller)
+                    : const Icon(
+                        Icons.keyboard_arrow_down_outlined,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                onExpansionChanged: (val) {
+                  setState(() {
+                    expansionOn = val;
+                  });
+                },
                 children: [
                   const SizedBox(
                     height: 10,
@@ -214,6 +225,9 @@ renderDeleteButton(BuildContext context, String date, String cam, String type,
             );
           });
     },
-    child: const Icon(Icons.delete_forever_outlined),
+    child: const Icon(
+      Icons.delete_forever_outlined,
+      color: Colors.grey,
+    ),
   );
 }
