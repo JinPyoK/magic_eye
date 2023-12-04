@@ -33,6 +33,24 @@ String getDisplayName() {
   }
 }
 
+String getCreationTime() {
+  if (_auth.currentUser != null) {
+    DateTime dt = _auth.currentUser!.metadata.creationTime!;
+    String creationTime = '${dt.year}.${dt.month}.${dt.day}';
+    return creationTime;
+  } else {
+    return '';
+  }
+}
+
+String getEmail() {
+  if (_auth.currentUser != null) {
+    return _auth.currentUser!.email!;
+  } else {
+    return '';
+  }
+}
+
 bool isEmailVerified() {
   if (_auth.currentUser == null) {
     return false;

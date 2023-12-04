@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/RecordScreen/record_provider.dart';
 import 'package:magic_eye/MagicEyeView/RecordScreen/record_video.dart';
+import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'package:provider/provider.dart';
 
 class RecordItem extends StatefulWidget {
@@ -208,7 +209,7 @@ renderDeleteButton(BuildContext context, String date, String cam, String type,
                           backgroundColor: Colors.redAccent),
                       onPressed: () {
                         context
-                            .read<RecordProvider>()
+                            .read<MainProvider>()
                             .deleteData(date, cam, type, videoURL);
                         context.read<RecordProvider>().dataCollapse(controller);
                         Navigator.pop(context);

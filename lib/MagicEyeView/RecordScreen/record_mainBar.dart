@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'record_provider.dart';
+import 'package:magic_eye/MagicEyeView/main_provider.dart';
 
 class RecordMainBar extends StatelessWidget {
   final double width;
@@ -23,7 +23,7 @@ class RecordMainBar extends StatelessWidget {
               backgroundColor: const Color(0xff7C72EC),
             ),
             onPressed: () {
-              context.read<RecordProvider>().refreshRecordData();
+              context.read<MainProvider>().refreshRecordData();
             },
             child: const Icon(
               Icons.refresh,

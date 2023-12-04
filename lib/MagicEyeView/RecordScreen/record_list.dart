@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'record_item.dart';
-import 'record_provider.dart';
+import 'package:magic_eye/MagicEyeView/main_provider.dart';
 
 class RecordList extends StatefulWidget {
   final double width;
@@ -17,7 +17,7 @@ class _RecordListState extends State<RecordList> {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      List<dynamic> recordData = context.watch<RecordProvider>().records;
+      List<dynamic> recordData = context.watch<MainProvider>().records;
       return Container(
           width: widget.width / 1.2,
           height: widget.height / 1.4,
@@ -25,7 +25,7 @@ class _RecordListState extends State<RecordList> {
             borderRadius: BorderRadius.circular(12),
             color: const Color(0x207C72EC),
           ),
-          child: context.watch<RecordProvider>().refresh
+          child: context.watch<MainProvider>().refresh
               ? const Center(
                   child: CircularProgressIndicator(
                     color: Colors.black,
