@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/RecordScreen/record_list.dart';
 import 'package:provider/provider.dart';
 import 'record_provider.dart';
-import 'record_mainBar.dart';
+import 'record_main_bar.dart';
 
 class RecordScreen extends StatelessWidget {
   const RecordScreen({super.key});

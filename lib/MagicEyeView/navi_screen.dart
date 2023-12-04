@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/CCTVScreen/cctv_screen.dart';
-import 'package:magic_eye/MagicEyeView/MyPageScreen/myPage_screen.dart';
+import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_screen.dart';
 import 'package:magic_eye/MagicEyeView/RecordScreen/record_screen.dart';
 import 'package:magic_eye/MagicEyeView/user_info.dart';
 import 'package:magic_eye/MagicEyeView/CCTVScreen/cctv_provider.dart';

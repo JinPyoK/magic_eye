@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:magic_eye/MagicEyeView/MyPageScreen/myPage_PieChart.dart';
-import 'package:magic_eye/MagicEyeView/MyPageScreen/myPage_mainBar.dart';
-import 'package:magic_eye/MagicEyeView/MyPageScreen/myPage_userInfo.dart';
+import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_pie_chart.dart';
+import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_main_bar.dart';
+import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_user_info.dart';
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({super.key});

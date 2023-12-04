@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magic_eye/MagicEyeView/MyPageScreen/myPage_setting.dart';
+import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_setting.dart';
 
 class MyPageMainBar extends StatelessWidget {
   final double width;
