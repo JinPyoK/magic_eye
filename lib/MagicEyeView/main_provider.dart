@@ -14,7 +14,7 @@ class MainProvider extends ChangeNotifier {
 
   bool refresh = false;
 
-  Future<void> refreshRecordData() async {
+  Future<void> refreshData() async {
     refresh = true;
     notifyListeners();
     us = await getDB();

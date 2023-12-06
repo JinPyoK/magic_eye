@@ -23,7 +23,7 @@ class RecordMainBar extends StatelessWidget {
               backgroundColor: const Color(0xff7C72EC),
             ),
             onPressed: () {
-              context.read<MainProvider>().refreshRecordData();
+              context.read<MainProvider>().refreshData();
             },
             child: const Icon(
               Icons.refresh,
