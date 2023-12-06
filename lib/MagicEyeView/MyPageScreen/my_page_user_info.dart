@@ -48,7 +48,8 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
             SizedBox(
               height: widget.height / 40,
             ),
-            renderUserName(widget.width),
+            renderUserName(
+                widget.width, context.watch<MainProvider>().displayName),
             const SizedBox(
               height: 20,
             ),
@@ -164,16 +165,18 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
   }
 }
 
-renderUserName(double width) {
+renderUserName(double width, String name) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       SizedBox(
         width: width / 2,
-        child: Text(
-          getDisplayName(),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          overflow: TextOverflow.ellipsis,
+        child: Center(
+          child: Text(
+            name,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       )
     ],

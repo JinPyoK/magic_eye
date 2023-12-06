@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:magic_eye/Firebase/auth.dart';
 import 'package:magic_eye/Firebase/database.dart';
+import 'package:magic_eye/MagicEyeView/main_provider.dart';
+import 'package:provider/provider.dart';
 
 class MyPageSetting extends StatefulWidget {
   const MyPageSetting({super.key});
@@ -23,6 +25,25 @@ class _MyPageSettingState extends State<MyPageSetting> {
     navFunction() {
       Navigator.pushNamedAndRemoveUntil(
           context, '/Login/SignIn', (route) => false);
+    }
+
+    renderSnackBar(String code) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.deepPurpleAccent,
+          content: Center(
+            child: Text(
+              code,
+              style: const TextStyle(color: Colors.white),
+            ),
+          )));
+    }
+
+    focusOut() {
+      FocusScope.of(context).unfocus();
+    }
+
+    updateState() {
+      context.read<MainProvider>().changeDisplayName(newDisplayName);
     }
 
     return Scaffold(
@@ -111,9 +132,27 @@ class _MyPageSettingState extends State<MyPageSetting> {
                       }
                       return null;
                     },
-                    onPressed: () {
-                      print("asdfsaf");
-                    }),
+                    onPressed: () async {
+                      if (displayNameKey.currentState!.validate()) {
+                        displayNameKey.currentState!.save();
+                        focusOut();
+                        setState(() {
+                          updateDisplayNameLoading = true;
+                        });
+                        var errorCode = await updateDisplayName(
+                            newDisplayName: newDisplayName);
+                        setState(() {
+                          updateDisplayNameLoading = false;
+                        });
+                        if (errorCode == '') {
+                          renderSnackBar("닉네임을 변경하였습니다.");
+                          updateState();
+                        } else {
+                          renderSnackBar(errorCode);
+                        }
+                      }
+                    },
+                    loading: updateDisplayNameLoading),
               ],
             ),
           );
@@ -131,6 +170,7 @@ renderTextFormField({
   required FormFieldSetter onSaved,
   required FormFieldValidator validator,
   required VoidCallback onPressed,
+  required bool loading,
 }) {
   return Column(
     children: [
@@ -175,7 +215,22 @@ renderTextFormField({
             ),
           ),
           ElevatedButton(
-              onPressed: onPressed, child: const Icon(Icons.send_outlined))
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurpleAccent,
+                  fixedSize: Size(width / 5, 45)),
+              onPressed: onPressed,
+              child: loading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Center(
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                    ))
         ],
       ),
     ],

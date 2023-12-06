@@ -204,10 +204,13 @@ Future<void> signOut() async {
   }
 }
 
-Future<void> updateDisplayName({required String newDisplayName}) async {
+Future<String> updateDisplayName({required String newDisplayName}) async {
   try {
     await _auth.currentUser!.updateDisplayName(newDisplayName);
+    _errorCode = '';
+    return _errorCode;
   } on Exception catch (_) {
-    return;
+    _errorCode = '에러가 발생했습니다';
+    return _errorCode;
   }
 }

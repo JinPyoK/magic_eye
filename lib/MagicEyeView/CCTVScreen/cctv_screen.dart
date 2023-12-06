@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'drop_down_box.dart';
 import 'package:provider/provider.dart';
 import 'cctv_provider.dart';
 import 'cctv_view.dart';
-import 'package:magic_eye/Firebase/auth.dart';
 
 class CCTVScreen extends StatelessWidget {
   const CCTVScreen({super.key});
@@ -28,7 +28,8 @@ class CCTVScreen extends StatelessWidget {
                         height: height / 25,
                       ),
                       renderMainBar(width),
-                      renderIntroduce(width, getDisplayName()),
+                      renderIntroduce(
+                          width, context.watch<MainProvider>().displayName),
                       const SizedBox(
                         height: 20,
                       ),

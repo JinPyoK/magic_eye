@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'user_info.dart';
 import 'package:magic_eye/Firebase/database.dart';
+import 'package:magic_eye/Firebase/auth.dart';
 
 late UserInfo us;
 
@@ -8,6 +9,8 @@ class MainProvider extends ChangeNotifier {
   UserInfo userInfo = us;
   List<dynamic> records = List.from(us.anormals);
   List<dynamic> cctvs = List.from(us.cctvs);
+
+  String displayName = getDisplayName();
 
   bool refresh = false;
 
@@ -33,6 +36,11 @@ class MainProvider extends ChangeNotifier {
       }
     }));
     updateDB({'anormals': records});
+    notifyListeners();
+  }
+
+  void changeDisplayName(String newDisplayName) {
+    displayName = newDisplayName;
     notifyListeners();
   }
 }
