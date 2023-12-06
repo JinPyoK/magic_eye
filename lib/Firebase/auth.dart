@@ -168,13 +168,18 @@ Future<void> emailVerify() async {
   }
 }
 
-Future<void> updatePassword({required String newPassword}) async {
+Future<String> updatePassword({required String newPassword}) async {
   try {
     if (_auth.currentUser != null) {
       await _auth.currentUser!.updatePassword(newPassword);
+      _errorCode = '';
+      return _errorCode;
     }
+    _errorCode = '계정이 존재하지 않습니다';
+    return _errorCode;
   } on FirebaseAuthException catch (_) {
-    return;
+    _errorCode = '에러가 발생했습니다';
+    return _errorCode;
   }
 }
 

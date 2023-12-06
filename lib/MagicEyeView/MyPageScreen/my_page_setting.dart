@@ -3,6 +3,7 @@ import 'package:magic_eye/Firebase/auth.dart';
 import 'package:magic_eye/Firebase/database.dart';
 import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:string_validator/string_validator.dart';
 
 class MyPageSetting extends StatefulWidget {
   const MyPageSetting({super.key});
@@ -47,6 +48,7 @@ class _MyPageSettingState extends State<MyPageSetting> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: LayoutBuilder(
         builder: (context, box) {
           final width = box.maxWidth;
@@ -153,6 +155,50 @@ class _MyPageSettingState extends State<MyPageSetting> {
                       }
                     },
                     loading: updateDisplayNameLoading),
+                const SizedBox(
+                  height: 20,
+                ),
+                renderTextFormField(
+                    width: width,
+                    formKey: passwordKey,
+                    label: '비밀번호 변경',
+                    hint: '',
+                    onSaved: (val) {
+                      setState(() {
+                        newPassword = val;
+                      });
+                    },
+                    validator: (val) {
+                      if (val.length < 1) {
+                        return '필수 사항입니다.';
+                      } else if (val.length < 8 ||
+                          val.length > 16 ||
+                          isAlpha(val) ||
+                          isNumeric(val)) {
+                        return '영문, 숫자 조합 8~16자';
+                      }
+                      return null;
+                    },
+                    onPressed: () async {
+                      if (passwordKey.currentState!.validate()) {
+                        passwordKey.currentState!.save();
+                        focusOut();
+                        setState(() {
+                          updatePasswordLoading = true;
+                        });
+                        var errorCode =
+                            await updatePassword(newPassword: newPassword);
+                        setState(() {
+                          updatePasswordLoading = false;
+                        });
+                        if (errorCode == '') {
+                          renderSnackBar("비밀번호를 변경하였습니다.");
+                        } else {
+                          renderSnackBar(errorCode);
+                        }
+                      }
+                    },
+                    loading: updatePasswordLoading),
               ],
             ),
           );
