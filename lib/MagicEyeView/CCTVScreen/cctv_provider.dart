@@ -1,19 +1,26 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:magic_eye/Firebase/database.dart';
+import 'package:magic_eye/Firebase/auth.dart';
 
 late List<dynamic> cctvsFromJson;
 
 class CCTVProvider extends ChangeNotifier {
   List<dynamic> cctvs = cctvsFromJson;
   List<String> menu =
-      cctvsFromJson.map((cctv) => cctv['name'] as String).toList();
-
+  cctvsFromJson.map((cctv) => cctv['name'] as String).toList();
   String _connectAPI = '';
+  String _connectCam = '';
   final _dio = Dio();
+  Stream<Uint8List>? stream;
 
-  void changeAPI(String api) {
-    _connectAPI = cctvs[cctvs.indexWhere((cctv) => cctv['name'] == api)]['ip'];
+  Future<void> changeAPI(String api) async {
+    int changedIndex = cctvs.indexWhere((cctv) => cctv['name'] == api);
+    _connectAPI = cctvs[changedIndex]['ip'];
+    _connectCam = menu[changedIndex];
+    await fetchCCTV(_connectAPI);
     notifyListeners();
   }
 
@@ -33,19 +40,20 @@ class CCTVProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<int> fetchCCTV() async* {
-    if (_connectAPI == '192.168.12.15:8000') {
-      for (var i = 0; i < 10; i++) {
-        await Future.delayed(const Duration(seconds: 1));
-        yield i;
-      }
-    } else if (_connectAPI == '192.168.223.87:8000') {
-      for (var i = 20; i < 30; i++) {
-        await Future.delayed(const Duration(seconds: 1));
-        yield i;
-      }
-    }
+  Future<void> fetchCCTV(String api) async {
+    Response res = await _dio.get(
+        api, data: {'UID': getUID(), 'cam': _connectCam},
+        options: Options(responseType: ResponseType.stream));
+    ResponseBody resbody = res.data;
+    stream = resbody.stream;
+  }
 
-    // yield _dio.get(_connectAPI);
+  Future<void> initCCTV() async {
+    if (menu.isNotEmpty) {
+      _connectCam = menu[0];
+      _connectAPI = cctvs[0]['ip'];
+      await fetchCCTV(_connectAPI);
+      notifyListeners();
+    }
   }
 }
