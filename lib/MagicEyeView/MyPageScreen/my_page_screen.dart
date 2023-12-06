@@ -13,34 +13,32 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreenState extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(body: LayoutBuilder(
-        builder: (_, box) {
-          final width = box.maxWidth;
-          final height = box.maxHeight;
-          return Padding(
-            padding: const EdgeInsets.all(30),
-            child: Row(
-              children: [
-                Column(
-                  children: [
-                    SizedBox(
-                      height: height / 25,
-                    ),
-                    MyPageMainBar(width),
-                    SizedBox(
-                      height: height / 25,
-                    ),
-                    MyPageUserInfo(width, height),
-                    const SizedBox(height: 10),
-                    MyPagePieChart(width, height),
-                  ],
-                )
-              ],
-            ),
-          );
-        },
-      )),
-    );
+    return Scaffold(body: LayoutBuilder(
+      builder: (_, box) {
+        final width = box.maxWidth;
+        final height = box.maxHeight;
+        return Padding(
+          padding: const EdgeInsets.all(30),
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    height: height / 25,
+                  ),
+                  MyPageMainBar(width),
+                  SizedBox(
+                    height: height / 25,
+                  ),
+                  MyPageUserInfo(width, height),
+                  const SizedBox(height: 10),
+                  MyPagePieChart(width, height),
+                ],
+              )
+            ],
+          ),
+        );
+      },
+    ));
   }
 }
