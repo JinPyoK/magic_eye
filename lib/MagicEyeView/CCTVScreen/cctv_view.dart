@@ -24,8 +24,10 @@ class _CCTVViewState extends State<CCTVView> {
         height: widget.height / 2,
         decoration: BoxDecoration(
           border: Border.all(
+            color: Colors.deepPurpleAccent,
             width: 1.0,
           ),
+          borderRadius: BorderRadius.circular(28),
         ),
         child: StreamBuilder<Uint8List>(
           stream: context.watch<CCTVProvider>().stream,
@@ -50,7 +52,7 @@ class _CCTVViewState extends State<CCTVView> {
                 ),
               );
             } else {
-              return const Center(child: Text("이곳에 실시간 영상 송출"));
+              return Container();
             }
           },
         ),

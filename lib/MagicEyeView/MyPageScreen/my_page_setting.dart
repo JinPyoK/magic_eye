@@ -14,6 +14,10 @@ class _MyPageSettingState extends State<MyPageSetting> {
   final storeNumberKey = GlobalKey<FormState>();
   final passwordKey = GlobalKey<FormState>();
 
+  String newDisplayName = '';
+  String newStoreNumber = '';
+  String newPassword = '';
+
   @override
   Widget build(BuildContext context) {
     navFunction() {
@@ -24,6 +28,7 @@ class _MyPageSettingState extends State<MyPageSetting> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, box) {
+          final width = box.maxWidth;
           final height = box.maxHeight;
           return Padding(
             padding: const EdgeInsets.all(22.0),
@@ -84,7 +89,31 @@ class _MyPageSettingState extends State<MyPageSetting> {
                               )
                             : const Text("로그아웃")),
                   ],
-                )
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                renderTextFormField(
+                    width: width,
+                    formKey: displayNameKey,
+                    label: '닉네임 변경',
+                    hint: getDisplayName(),
+                    onSaved: (val) {
+                      setState(() {
+                        newDisplayName = val;
+                      });
+                    },
+                    validator: (val) {
+                      if (val.length < 1) {
+                        return '필수 사항입니다.';
+                      } else if (val.length > 10) {
+                        return '10자 이하로 작성해주세요.';
+                      }
+                      return null;
+                    },
+                    onPressed: () {
+                      print("asdfsaf");
+                    }),
               ],
             ),
           );
@@ -95,53 +124,60 @@ class _MyPageSettingState extends State<MyPageSetting> {
 }
 
 renderTextFormField({
+  required double width,
   required GlobalKey<FormState> formKey,
   required String label,
   required String hint,
   required FormFieldSetter onSaved,
   required FormFieldValidator validator,
+  required VoidCallback onPressed,
 }) {
-  return SizedBox(
-    width: 300,
-    height: 120,
-    child: Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
+  return Column(
+    children: [
+      Row(
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
             ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        TextFormField(
-          obscureText: label == '비밀번호' ? true : false,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          onSaved: onSaved,
-          validator: validator,
-          onTap: () {
-            formKey.currentState!.save();
-          },
-          decoration: InputDecoration(
-            labelText: label,
-            hintText: hint,
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            border: const OutlineInputBorder(),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.deepPurpleAccent,
+          ),
+        ],
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: width / 1.6,
+            child: Form(
+              key: formKey,
+              child: TextFormField(
+                obscureText: label == '비밀번호 변경' ? true : false,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onSaved: onSaved,
+                validator: validator,
+                decoration: InputDecoration(
+                  hintText: hint,
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  border: const OutlineInputBorder(),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.deepPurpleAccent,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
+          ElevatedButton(
+              onPressed: onPressed, child: const Icon(Icons.send_outlined))
+        ],
+      ),
+    ],
   );
 }
