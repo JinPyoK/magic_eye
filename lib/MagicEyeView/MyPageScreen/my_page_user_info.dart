@@ -36,7 +36,7 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.width / 1.2,
-      height: widget.height / 2.2,
+      height: widget.height / 2,
       decoration: BoxDecoration(
         color: const Color(0x207C72EC),
         borderRadius: BorderRadius.circular(16),

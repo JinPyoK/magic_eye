@@ -13,6 +13,7 @@ class CCTVScreen extends StatelessWidget {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => CCTVProvider())],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           resizeToAvoidBottomInset: false,
           body: LayoutBuilder(builder: (_, box) {

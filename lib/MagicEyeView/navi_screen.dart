@@ -45,6 +45,7 @@ class _NaviScreenState extends State<NaviScreen> {
     return MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => MainProvider())],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         routes: {
           '/HomeScreen': (context) => const HomeScreen(),
           '/Login/SignIn': (context) => const SignIn(),

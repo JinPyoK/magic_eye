@@ -23,15 +23,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
             children: [
               Column(
                 children: [
-                  SizedBox(
-                    height: height / 25,
+                  const SizedBox(
+                    height: 10,
                   ),
                   MyPageMainBar(width),
-                  SizedBox(
-                    height: height / 25,
+                  const SizedBox(
+                    height: 10,
                   ),
                   MyPageUserInfo(width, height),
-                  const SizedBox(height: 10),
+                  //const SizedBox(height: 10),
                   MyPagePieChart(width, height),
                 ],
               )
