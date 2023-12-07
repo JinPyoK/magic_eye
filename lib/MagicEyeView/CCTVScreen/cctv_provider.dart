@@ -1,9 +1,6 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:magic_eye/Firebase/database.dart';
-import 'package:magic_eye/Firebase/auth.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
 late List<dynamic> cctvsFromJson;
 
@@ -13,10 +10,13 @@ class CCTVProvider extends ChangeNotifier {
       cctvsFromJson.map((cctv) => cctv['name'] as String).toList();
   String _connectAPI = '';
   String _connectCam = '';
-  final _dio = Dio();
-  Stream<Uint8List>? stream;
 
-  //192.168.219.107:8080/stream
+  VlcPlayerController videoPlayerController = VlcPlayerController.network(
+    '',
+    hwAcc: HwAcc.full,
+    autoPlay: false,
+    options: VlcPlayerOptions(),
+  );
 
   Future<void> changeAPI(String api) async {
     int changedIndex = cctvs.indexWhere((cctv) => cctv['name'] == api);
@@ -39,19 +39,12 @@ class CCTVProvider extends ChangeNotifier {
     menu.removeAt(deleteIndex);
     cctvs.removeAt(deleteIndex);
     updateDB({"cctvs": cctvs});
+    initCCTV();
     notifyListeners();
   }
 
   Future<void> fetchCCTV(String api) async {
-    try {
-      Response res = await _dio.get(api,
-          data: {'UID': getUID(), 'cam': _connectCam},
-          options: Options(responseType: ResponseType.stream));
-      ResponseBody resbody = res.data;
-      stream = resbody.stream;
-    } on Exception catch (e) {
-      stream = null;
-    }
+    await videoPlayerController.setMediaFromNetwork(api);
   }
 
   Future<void> initCCTV() async {
