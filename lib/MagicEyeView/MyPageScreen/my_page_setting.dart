@@ -180,21 +180,23 @@ class _MyPageSettingState extends State<MyPageSetting> {
                       return null;
                     },
                     onPressed: () async {
-                      if (passwordKey.currentState!.validate()) {
-                        passwordKey.currentState!.save();
-                        focusOut();
-                        setState(() {
-                          updatePasswordLoading = true;
-                        });
-                        var errorCode =
-                            await updatePassword(newPassword: newPassword);
-                        setState(() {
-                          updatePasswordLoading = false;
-                        });
-                        if (errorCode == '') {
-                          renderSnackBar("비밀번호를 변경하였습니다.");
-                        } else {
-                          renderSnackBar(errorCode);
+                      if (!googleLogin) {
+                        if (passwordKey.currentState!.validate()) {
+                          passwordKey.currentState!.save();
+                          focusOut();
+                          setState(() {
+                            updatePasswordLoading = true;
+                          });
+                          var errorCode =
+                              await updatePassword(newPassword: newPassword);
+                          setState(() {
+                            updatePasswordLoading = false;
+                          });
+                          if (errorCode == '') {
+                            renderSnackBar("비밀번호를 변경하였습니다.");
+                          } else {
+                            renderSnackBar(errorCode);
+                          }
                         }
                       }
                     },
@@ -242,6 +244,8 @@ renderTextFormField({
             child: Form(
               key: formKey,
               child: TextFormField(
+                enabled:
+                    label == '비밀번호 변경' ? (googleLogin ? false : true) : true,
                 obscureText: label == '비밀번호 변경' ? true : false,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onSaved: onSaved,
