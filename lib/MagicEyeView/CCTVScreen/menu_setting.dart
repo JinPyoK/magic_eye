@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'cctv_provider.dart';
+import 'package:magic_eye/MagicEyeView/main_provider.dart';
 
 class MenuSetting extends StatefulWidget {
   const MenuSetting({super.key});
@@ -148,7 +148,7 @@ class _MenuSettingState extends State<MenuSetting> {
                     FocusScope.of(context).unfocus();
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
-                      context.read<CCTVProvider>().addMenu(name, ip);
+                      context.read<MainProvider>().addMenu(name, ip);
                       Navigator.pop(context);
                     }
                   },
@@ -170,7 +170,7 @@ class _MenuSettingState extends State<MenuSetting> {
           title: Text(cam),
           trailing: const Icon(Icons.delete_forever_outlined),
           onTap: () {
-            context.read<CCTVProvider>().deleteMenu(cam);
+            context.read<MainProvider>().deleteMenu(cam);
           },
         ),
       );
@@ -181,7 +181,7 @@ class _MenuSettingState extends State<MenuSetting> {
       height: height / 3,
       child: ListView(
         children: context
-            .watch<CCTVProvider>()
+            .watch<MainProvider>()
             .menu
             .map((cam) => renderListTile(cam))
             .toList(),

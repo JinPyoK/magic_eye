@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'cctv_provider.dart';
 import 'menu_setting.dart';
+import 'package:magic_eye/MagicEyeView/main_provider.dart';
 
 class Menu extends StatefulWidget {
   final double width;
@@ -15,7 +15,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
-    return context.watch<CCTVProvider>().menu.isNotEmpty
+    return context.watch<MainProvider>().menu.isNotEmpty
         ? DropdownMenu(
             width: widget.width,
             menuHeight: 135,
@@ -23,12 +23,12 @@ class _MenuState extends State<Menu> {
             hintText: "설정 버튼을 눌러 CCTV 추가",
             trailingIcon: menuIcon(context),
             selectedTrailingIcon: const Icon(Icons.menu_outlined),
-            initialSelection: context.watch<CCTVProvider>().menu.first,
+            initialSelection: context.watch<MainProvider>().menu.first,
             onSelected: (String? val) {
-              context.read<CCTVProvider>().changeAPI(val!);
+              context.read<MainProvider>().changeAPI(val!);
             },
             dropdownMenuEntries: context
-                .watch<CCTVProvider>()
+                .watch<MainProvider>()
                 .menu
                 .map<DropdownMenuEntry<String>>((String value) {
               return DropdownMenuEntry<String>(value: value, label: value);

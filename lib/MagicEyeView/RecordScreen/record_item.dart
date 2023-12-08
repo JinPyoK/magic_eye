@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:magic_eye/MagicEyeView/RecordScreen/record_provider.dart';
 import 'package:magic_eye/MagicEyeView/RecordScreen/record_video.dart';
 import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'package:provider/provider.dart';
@@ -211,7 +210,7 @@ renderDeleteButton(BuildContext context, String date, String cam, String type,
                         context
                             .read<MainProvider>()
                             .deleteData(date, cam, type, videoURL);
-                        context.read<RecordProvider>().dataCollapse(controller);
+                        context.read<MainProvider>().dataCollapse(controller);
                         Navigator.pop(context);
                       },
                       child: const Text(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'drop_down_box.dart';
 import 'package:provider/provider.dart';
-import 'cctv_provider.dart';
 import 'cctv_view.dart';
 
 class CCTVScreen extends StatelessWidget {
@@ -10,42 +9,39 @@ class CCTVScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => CCTVProvider())],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: LayoutBuilder(builder: (_, box) {
-            final width = box.maxWidth;
-            final height = box.maxHeight;
-            return Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Row(
-                children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: height / 25,
-                      ),
-                      renderMainBar(width),
-                      renderIntroduce(
-                          width, context.watch<MainProvider>().displayName),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Menu(width / 1.3),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CCTVView(width, height),
-                    ],
-                  )
-                ],
-              ),
-            );
-          }),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: LayoutBuilder(builder: (_, box) {
+          final width = box.maxWidth;
+          final height = box.maxHeight;
+          return Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Row(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      height: height / 25,
+                    ),
+                    renderMainBar(width),
+                    renderIntroduce(
+                        width, context.watch<MainProvider>().displayName),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Menu(width / 1.3),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CCTVView(context, width, height),
+                  ],
+                )
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
