@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_main_bar.dart';
-import 'package:magic_eye/MagicEyeView/MyPageScreen/my_page_user_info.dart';
+import 'package:magic_eye/MagicEyeView/StatisticsScreen/statistics_navi.dart';
 
-class MyPageScreen extends StatefulWidget {
-  const MyPageScreen({super.key});
+class StatisticsScreen extends StatefulWidget {
+  const StatisticsScreen({super.key});
 
   @override
-  State<MyPageScreen> createState() => _MyPageScreenState();
+  State<StatisticsScreen> createState() => _StatisticsScreenState();
 }
 
-class _MyPageScreenState extends State<MyPageScreen> {
+class _StatisticsScreenState extends State<StatisticsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: LayoutBuilder(
@@ -17,7 +16,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         final width = box.maxWidth;
         final height = box.maxHeight;
         return Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30.0),
           child: Row(
             children: [
               Column(
@@ -25,11 +24,11 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                  MyPageMainBar(width),
+                  renderMainBar(width),
                   const SizedBox(
                     height: 30,
                   ),
-                  MyPageUserInfo(width, height),
+                  StatisticsNavi(width, height),
                 ],
               )
             ],
@@ -38,4 +37,14 @@ class _MyPageScreenState extends State<MyPageScreen> {
       },
     ));
   }
+}
+
+renderMainBar(double width) {
+  return SizedBox(
+    width: width / 1.3,
+    child: const Text(
+      '통계 분석',
+      style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+    ),
+  );
 }

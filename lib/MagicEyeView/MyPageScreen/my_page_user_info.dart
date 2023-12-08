@@ -36,7 +36,7 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.width / 1.2,
-      height: widget.height / 2,
+      height: widget.height / 1.8,
       decoration: BoxDecoration(
         color: const Color(0x207C72EC),
         borderRadius: BorderRadius.circular(16),
@@ -69,7 +69,7 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
             renderRowWith(
                 '알림 수신',
                 SizedBox(
-                  height: 30,
+                  height: 50,
                   child: Switch(
                       activeColor: Colors.deepPurpleAccent,
                       value: entireAlarm,
@@ -95,7 +95,7 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
             renderRowWith(
                 '점거 알림',
                 SizedBox(
-                  height: 30,
+                  height: 40,
                   child: Switch(
                       activeColor: Colors.deepPurpleAccent,
                       value: occupyAlarm,
@@ -118,7 +118,7 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
             renderRowWith(
                 '도난 알림',
                 SizedBox(
-                  height: 30,
+                  height: 40,
                   child: Switch(
                       activeColor: Colors.deepPurpleAccent,
                       value: theftAlarm,
@@ -141,7 +141,7 @@ class _MyPageUserInfoState extends State<MyPageUserInfo> {
             renderRowWith(
                 '파손 알림',
                 SizedBox(
-                  height: 30,
+                  height: 40,
                   child: Switch(
                       activeColor: Colors.deepPurpleAccent,
                       value: breakAlarm,

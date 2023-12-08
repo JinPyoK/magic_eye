@@ -3,17 +3,29 @@ import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-class MyPagePieChart extends StatefulWidget {
+class StatisticsPieChart extends StatefulWidget {
   final double width;
   final double height;
 
-  const MyPagePieChart(this.width, this.height, {super.key});
+  const StatisticsPieChart(this.width, this.height, {super.key});
 
   @override
-  State<MyPagePieChart> createState() => _MyPagePieChartState();
+  State<StatisticsPieChart> createState() => _StatisticsPieChartState();
 }
 
-class _MyPagePieChartState extends State<MyPagePieChart> {
+class _StatisticsPieChartState extends State<StatisticsPieChart> {
+  double opacity = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        opacity = 1;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Builder(
@@ -31,18 +43,43 @@ class _MyPagePieChartState extends State<MyPagePieChart> {
             numOfBreak++;
           }
         }
-        return SizedBox(
-          width: widget.width / 1.2,
-          height: widget.height / 3.4,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        return AnimatedOpacity(
+          opacity: opacity,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+          child: Column(
             children: [
               SizedBox(
-                  width: widget.width / 3,
-                  height: widget.height / 4,
-                  child: renderPieChart(
-                      widget.width, numOfOccupy, numOfTheft, numOfBreak)),
-              renderLegend(widget.width),
+                width: widget.width / 1.2,
+                height: widget.height / 3.4,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                        width: widget.width / 3,
+                        height: widget.height / 4,
+                        child: renderPieChart(
+                            widget.width, numOfOccupy, numOfTheft, numOfBreak)),
+                    renderLegend(widget.width),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "총합: ${numOfOccupy + numOfTheft + numOfBreak}",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  )
+                ],
+              )
             ],
           ),
         );

@@ -3,6 +3,7 @@ import 'package:magic_eye/MagicEyeView/user_info.dart';
 import 'CCTVScreen/cctv_screen.dart';
 import 'MyPageScreen/my_page_screen.dart';
 import 'RecordScreen/record_screen.dart';
+import 'StatisticsScreen/statistics_screen.dart';
 import 'main_provider.dart';
 
 class Navi extends StatefulWidget {
@@ -17,6 +18,7 @@ class _NaviState extends State<Navi> {
   static const List<Widget> _widgetOptions = <Widget>[
     CCTVScreen(),
     RecordScreen(),
+    StatisticsScreen(),
     MyPageScreen(),
   ];
 
@@ -70,12 +72,17 @@ class _NaviState extends State<Navi> {
                     label: 'Record',
                   ),
                   BottomNavigationBarItem(
+                    icon: Icon(Icons.analytics_outlined),
+                    label: 'Statistics',
+                  ),
+                  BottomNavigationBarItem(
                     icon: Icon(Icons.face),
                     label: 'MY',
                   ),
                 ],
                 currentIndex: _selectedIndex,
                 selectedItemColor: Colors.deepPurpleAccent,
+                unselectedItemColor: Colors.black,
                 onTap: _onItemTapped,
               ),
             );
