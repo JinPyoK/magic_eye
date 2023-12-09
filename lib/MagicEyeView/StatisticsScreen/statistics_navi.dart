@@ -65,7 +65,8 @@ class _StatisticsNaviState extends State<StatisticsNavi> {
               } else if (_selectedStatistics[1]) {
                 return StatisticsBarChart(context, widget.width, widget.height);
               } else if (_selectedStatistics[2]) {
-                return const StatisticsLineChart();
+                return StatisticsLineChart(
+                    context, widget.width, widget.height);
               } else {
                 return Container();
               }

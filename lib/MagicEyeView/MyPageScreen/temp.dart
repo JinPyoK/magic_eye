@@ -11,6 +11,9 @@ class TempButton extends StatelessWidget {
           await updateDB({
             'people_info': {
               '2023-12-09 07:20:39': {'age': 6, 'gender': 'Man'},
+              '2023-12-08 07:20:39': {'age': 6, 'gender': 'Man'},
+              '2023-12-07 07:20:39': {'age': 6, 'gender': 'Man'},
+              '2023-12-17 07:20:39': {'age': 6, 'gender': 'Man'},
               '2023-12-09 07:20:40': {'age': 12, 'gender': 'Man'},
               '2023-12-09 07:20:41': {'age': 15, 'gender': 'Man'},
               '2023-12-09 07:20:32': {'age': 17, 'gender': 'Man'},
@@ -32,6 +35,13 @@ class TempButton extends StatelessWidget {
               '2023-12-09 07:30:23': {'age': 31, 'gender': 'Man'},
               '2023-12-09 07:40:23': {'age': 32, 'gender': 'Man'},
               '2023-12-09 07:50:23': {'age': 33, 'gender': 'Man'},
+              '2022-12-09 07:50:23': {'age': 33, 'gender': 'Man'},
+              '2022-02-09 07:50:23': {'age': 33, 'gender': 'Man'},
+              '2022-05-09 07:50:23': {'age': 33, 'gender': 'Man'},
+              '2022-08-09 07:50:23': {'age': 33, 'gender': 'Man'},
+              '2022-07-09 07:50:23': {'age': 33, 'gender': 'Man'},
+              '2022-09-09 07:50:23': {'age': 33, 'gender': 'Man'},
+              '2022-11-09 07:50:23': {'age': 33, 'gender': 'Man'},
               '2023-12-09 07:23:23': {'age': 34, 'gender': 'Man'},
               '2023-12-09 01:23:23': {'age': 35, 'gender': 'Man'},
               '2023-12-09 02:23:23': {'age': 36, 'gender': 'Man'},

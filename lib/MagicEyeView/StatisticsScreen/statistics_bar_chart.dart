@@ -129,7 +129,9 @@ class _StatisticsBarChartState extends State<StatisticsBarChart> {
                       borderData: FlBorderData(
                         show: false,
                       ),
-                      gridData: const FlGridData(show: false),
+                      gridData: const FlGridData(
+                        show: true,
+                      ),
                       backgroundColor: const Color(0xff31415E),
                       barGroups: renderBarGroups(<double>[
                         val1,

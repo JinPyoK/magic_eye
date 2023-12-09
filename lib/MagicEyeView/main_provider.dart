@@ -67,9 +67,9 @@ class MainProvider extends ChangeNotifier {
   Future<void> refreshData() async {
     refresh = true;
     notifyListeners();
-    us = await getDB();
-    records = List.from(us.anormals);
-    cctvs = List.from(us.cctvs);
+    userInfo = await getDB();
+    records = List.from(userInfo.anormals);
+    cctvs = List.from(userInfo.cctvs);
     refresh = false;
     notifyListeners();
   }
