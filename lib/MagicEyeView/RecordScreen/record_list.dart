@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'record_item.dart';
 import 'package:magic_eye/MagicEyeView/main_provider.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class RecordList extends StatefulWidget {
   final double width;
@@ -34,17 +35,29 @@ class _RecordListState extends State<RecordList> {
               : (recordData.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: ListView.separated(
-                        itemCount: recordData.length,
-                        itemBuilder: (context, index) {
-                          return RecordItem(
-                              date: recordData[index]['date'] ?? '',
-                              cam: recordData[index]['cam'] ?? '',
-                              type: recordData[index]['type'] ?? '',
-                              videoURL: recordData[index]['videoURL'] ?? '');
-                        },
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 10,
+                      child: AnimationLimiter(
+                        child: ListView.separated(
+                          itemCount: recordData.length,
+                          itemBuilder: (context, index) {
+                            return AnimationConfiguration.staggeredList(
+                              position: index,
+                              duration: const Duration(milliseconds: 375),
+                              child: SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: FadeInAnimation(
+                                  child: RecordItem(
+                                      date: recordData[index]['date'] ?? '',
+                                      cam: recordData[index]['cam'] ?? '',
+                                      type: recordData[index]['type'] ?? '',
+                                      videoURL:
+                                          recordData[index]['videoURL'] ?? ''),
+                                ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 10,
+                          ),
                         ),
                       ),
                     )
