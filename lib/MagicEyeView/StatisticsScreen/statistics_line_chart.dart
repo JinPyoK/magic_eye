@@ -13,11 +13,6 @@ class StatisticsLineChart extends StatefulWidget {
 }
 
 class _StatisticsLineChartState extends State<StatisticsLineChart> {
-  List<Color> gradientColors = [
-    Colors.cyanAccent,
-    Colors.blueAccent,
-  ];
-
   bool showAvg = false;
 
   List<FlSpot> spots1 = const [
@@ -156,6 +151,10 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
   }
 
   LineChartData mainData() {
+    List<Color> gradientColors = <Color>[
+      Colors.cyanAccent,
+      Colors.blueAccent,
+    ];
     return LineChartData(
       gridData: FlGridData(
         show: true,

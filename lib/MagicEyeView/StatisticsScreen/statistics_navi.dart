@@ -48,10 +48,8 @@ class _StatisticsNaviState extends State<StatisticsNavi> {
               selectedColor: Colors.white,
               fillColor: Colors.black26,
               color: Colors.black54,
-              constraints: const BoxConstraints(
-                minHeight: 40.0,
-                minWidth: 80.0,
-              ),
+              constraints:
+                  const BoxConstraints(minHeight: 40.0, minWidth: 90.0),
               textStyle: const TextStyle(fontWeight: FontWeight.bold),
               isSelected: _selectedStatistics,
               children: statistics,

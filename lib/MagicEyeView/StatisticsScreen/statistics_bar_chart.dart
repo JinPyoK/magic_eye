@@ -94,7 +94,7 @@ class _StatisticsBarChartState extends State<StatisticsBarChart> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 SizedBox(
                   width: widget.width / 1.2,
@@ -156,16 +156,16 @@ class _StatisticsBarChartState extends State<StatisticsBarChart> {
         const SizedBox(
           height: 10,
         ),
-        renderDataTable(<int>[
-          numOfMan1,
-          numOfWoman1,
-          numOfMan2,
-          numOfWoman2,
-          numOfMan3,
-          numOfWoman3,
-          numOfMan4,
-          numOfWoman4
-        ])
+        renderDataTable(<String>[
+          val1.toStringAsFixed(1),
+          val2.toStringAsFixed(1),
+          val3.toStringAsFixed(1),
+          val4.toStringAsFixed(1),
+          val5.toStringAsFixed(1),
+          val6.toStringAsFixed(1),
+          val7.toStringAsFixed(1),
+          val8.toStringAsFixed(1),
+        ]),
       ],
     );
   }
@@ -235,7 +235,7 @@ Widget bottomTitles(double value, TitleMeta meta) {
   );
 }
 
-renderDataTable(List<int> info) {
+renderDataTable(List<String> info) {
   TextStyle style = const TextStyle(fontWeight: FontWeight.bold);
   return DataTable(
       border: const TableBorder(
@@ -270,8 +270,8 @@ renderDataTable(List<int> info) {
               '0~19',
               style: style,
             ))),
-            DataCell(Center(child: Text(info[0].toString()))),
-            DataCell(Center(child: Text(info[1].toString()))),
+            DataCell(Center(child: Text('${info[0]}%'))),
+            DataCell(Center(child: Text('${info[1]}%'))),
           ],
         ),
         DataRow(
@@ -281,8 +281,8 @@ renderDataTable(List<int> info) {
               '20~39',
               style: style,
             ))),
-            DataCell(Center(child: Text(info[2].toString()))),
-            DataCell(Center(child: Text(info[3].toString()))),
+            DataCell(Center(child: Text('${info[2]}%'))),
+            DataCell(Center(child: Text('${info[3]}%'))),
           ],
         ),
         DataRow(
@@ -292,8 +292,8 @@ renderDataTable(List<int> info) {
               '40~59',
               style: style,
             ))),
-            DataCell(Center(child: Text(info[4].toString()))),
-            DataCell(Center(child: Text(info[5].toString()))),
+            DataCell(Center(child: Text('${info[4]}%'))),
+            DataCell(Center(child: Text('${info[5]}%'))),
           ],
         ),
         DataRow(
@@ -303,8 +303,8 @@ renderDataTable(List<int> info) {
               '60~',
               style: style,
             ))),
-            DataCell(Center(child: Text(info[6].toString()))),
-            DataCell(Center(child: Text(info[7].toString()))),
+            DataCell(Center(child: Text('${info[6]}%'))),
+            DataCell(Center(child: Text('${info[7]}%'))),
           ],
         ),
       ]);
