@@ -237,8 +237,8 @@ renderDataTable(List<int> info) {
   TextStyle style = const TextStyle(fontWeight: FontWeight.bold);
   return DataTable(
       border: const TableBorder(
-          top: BorderSide(width: 1, color: Colors.black38),
-          bottom: BorderSide(width: 1, color: Colors.black38),
+          top: BorderSide(width: 2, color: Colors.black38),
+          bottom: BorderSide(width: 2, color: Colors.black38),
           verticalInside: BorderSide(width: 1, color: Colors.black26)),
       columns: <DataColumn>[
         DataColumn(

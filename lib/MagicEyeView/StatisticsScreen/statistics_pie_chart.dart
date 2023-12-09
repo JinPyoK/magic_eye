@@ -190,8 +190,8 @@ renderLegend(double width) {
 renderDataTable(int numOfOccupy, int numOfTheft, int numOfBreak) {
   return DataTable(
       border: const TableBorder(
-          top: BorderSide(width: 1, color: Colors.black38),
-          bottom: BorderSide(width: 1, color: Colors.black38),
+          top: BorderSide(width: 2, color: Colors.black38),
+          bottom: BorderSide(width: 2, color: Colors.black38),
           verticalInside: BorderSide(width: 1, color: Colors.black26)),
       columns: const <DataColumn>[
         DataColumn(
