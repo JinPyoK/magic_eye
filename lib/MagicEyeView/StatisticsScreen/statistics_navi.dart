@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:magic_eye/MagicEyeView/StatisticsScreen/statistics_bar_chart.dart';
+import 'package:magic_eye/MagicEyeView/StatisticsScreen/statistics_line_chart.dart';
 import 'package:magic_eye/MagicEyeView/StatisticsScreen/statistics_pie_chart.dart';
 
 class StatisticsNavi extends StatefulWidget {
@@ -14,8 +16,8 @@ class StatisticsNavi extends StatefulWidget {
 class _StatisticsNaviState extends State<StatisticsNavi> {
   final List<Widget> statistics = <Widget>[
     const Text('Record'),
-    const Text('Age'),
-    const Text('People')
+    const Text('Age/Gender'),
+    const Text('Visitors')
   ];
   final List<bool> _selectedStatistics = <bool>[true, false, false];
 
@@ -23,7 +25,6 @@ class _StatisticsNaviState extends State<StatisticsNavi> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.width / 1.2,
-      height: widget.height / 1.5,
       decoration: BoxDecoration(
         color: const Color(0x207C72EC),
         borderRadius: BorderRadius.circular(16),
@@ -42,10 +43,11 @@ class _StatisticsNaviState extends State<StatisticsNavi> {
                 });
               },
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              selectedBorderColor: Colors.red[700],
+              selectedBorderColor: Colors.black87,
+              borderWidth: 2.5,
               selectedColor: Colors.white,
-              fillColor: Colors.red[200],
-              color: Colors.red[400],
+              fillColor: Colors.black26,
+              color: Colors.black54,
               constraints: const BoxConstraints(
                 minHeight: 40.0,
                 minWidth: 80.0,
@@ -55,15 +57,15 @@ class _StatisticsNaviState extends State<StatisticsNavi> {
               children: statistics,
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             Builder(builder: (_) {
               if (_selectedStatistics[0]) {
-                return StatisticsPieChart(widget.width, widget.height);
+                return StatisticsPieChart(context, widget.width, widget.height);
               } else if (_selectedStatistics[1]) {
-                return const Text("1번째");
+                return StatisticsBarChart(context, widget.width, widget.height);
               } else if (_selectedStatistics[2]) {
-                return const Text("2번째");
+                return const StatisticsLineChart();
               } else {
                 return Container();
               }

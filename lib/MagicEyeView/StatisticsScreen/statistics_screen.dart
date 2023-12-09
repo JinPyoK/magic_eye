@@ -22,13 +22,13 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
               Column(
                 children: [
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   renderMainBar(width),
                   const SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
-                  StatisticsNavi(width, height),
+                  Expanded(child: StatisticsNavi(width, height)),
                 ],
               )
             ],

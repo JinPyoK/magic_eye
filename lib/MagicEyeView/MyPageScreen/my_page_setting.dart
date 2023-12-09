@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_eye/Firebase/auth.dart';
-import 'package:magic_eye/Firebase/database.dart';
+import 'package:magic_eye/MagicEyeView/MyPageScreen/temp.dart';
 import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
@@ -68,32 +68,7 @@ class _MyPageSettingState extends State<MyPageSetting> {
                           Navigator.pop(context);
                         },
                         icon: const Icon(Icons.backspace_outlined)),
-                    ElevatedButton(
-                        onPressed: () async {
-                          await updateDB({
-                            'anormals': [
-                              {
-                                'date': "2023-09-18 09:45",
-                                'cam': "cam1",
-                                'type': 'occupy',
-                                'videoURL': 'videoURL1'
-                              },
-                              {
-                                'date': "2023-05-23 17:12",
-                                'cam': "cam1",
-                                'type': 'theft',
-                                'videoURL': 'videoURL2'
-                              },
-                              {
-                                'date': "2022-07-02 15:36",
-                                'cam': "cam2",
-                                'type': 'break',
-                                'videoURL': 'videoURL3'
-                              },
-                            ]
-                          });
-                        },
-                        child: const Text("정보저장")),
+                    const TempButton(),
                     ElevatedButton(
                         onPressed: () async {
                           setState(() {

@@ -4,36 +4,27 @@ import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class StatisticsPieChart extends StatefulWidget {
+  final BuildContext context;
   final double width;
   final double height;
 
-  const StatisticsPieChart(this.width, this.height, {super.key});
+  const StatisticsPieChart(this.context, this.width, this.height, {super.key});
 
   @override
   State<StatisticsPieChart> createState() => _StatisticsPieChartState();
 }
 
 class _StatisticsPieChartState extends State<StatisticsPieChart> {
-  double opacity = 0;
+  int numOfOccupy = 1;
+  int numOfTheft = 1;
+  int numOfBreak = 1;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        opacity = 1;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        List<dynamic> recordData = context.watch<MainProvider>().records;
-        int numOfOccupy = 0;
-        int numOfTheft = 0;
-        int numOfBreak = 0;
+        List<dynamic> recordData = widget.context.read<MainProvider>().records;
         for (var i = 0; i < recordData.length; i++) {
           if (recordData[i]['type'] == 'occupy') {
             numOfOccupy++;
@@ -43,45 +34,55 @@ class _StatisticsPieChartState extends State<StatisticsPieChart> {
             numOfBreak++;
           }
         }
-        return AnimatedOpacity(
-          opacity: opacity,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeIn,
-          child: Column(
-            children: [
-              SizedBox(
-                width: widget.width / 1.2,
-                height: widget.height / 3.4,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                        width: widget.width / 3,
-                        height: widget.height / 4,
-                        child: renderPieChart(
-                            widget.width, numOfOccupy, numOfTheft, numOfBreak)),
-                    renderLegend(widget.width),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+        numOfOccupy--;
+        numOfTheft--;
+        numOfBreak--;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        return Column(
+          children: [
+            SizedBox(
+              width: widget.width / 1.2,
+              height: widget.height / 3.4,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    "총합: ${numOfOccupy + numOfTheft + numOfBreak}",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  )
+                  SizedBox(
+                      width: widget.width / 3,
+                      height: widget.height / 4,
+                      child: renderPieChart(
+                          widget.width, numOfOccupy, numOfTheft, numOfBreak)),
+                  renderLegend(widget.width),
                 ],
-              )
-            ],
-          ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            renderDataTable(numOfOccupy, numOfTheft, numOfBreak),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "총합: ${numOfOccupy + numOfTheft + numOfBreak}",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                const SizedBox(
+                  width: 30,
+                )
+              ],
+            )
+          ],
         );
       },
     );
@@ -89,36 +90,40 @@ class _StatisticsPieChartState extends State<StatisticsPieChart> {
 }
 
 renderPieChart(double width, int numOfOccupy, int numOfTheft, int numOfBreak) {
-  TextStyle style = TextStyle(
+  TextStyle style = const TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.bold,
-    fontSize: width / 15,
+    fontSize: 20,
   );
 
   double radius = width / 4;
+  int total = numOfOccupy + numOfTheft + numOfBreak;
+  String percentOfOccupy = (numOfOccupy / total * 100).toStringAsFixed(1);
+  String percentOfTheft = (numOfTheft / total * 100).toStringAsFixed(1);
+  String percentOfBreak = (numOfBreak / total * 100).toStringAsFixed(1);
   return PieChart(
-    PieChartData(sectionsSpace: 10, centerSpaceRadius: 0, sections: [
+    PieChartData(sectionsSpace: 7, centerSpaceRadius: 0, sections: [
       PieChartSectionData(
           radius: radius,
           value: numOfOccupy.toDouble(),
-          title: "$numOfOccupy",
+          title: "$percentOfOccupy%",
           color: Colors.blue,
           titleStyle: style),
       PieChartSectionData(
           radius: radius,
           value: numOfTheft.toDouble(),
-          title: "$numOfTheft",
+          title: "$percentOfTheft%",
           color: Colors.yellow,
           titleStyle: style),
       PieChartSectionData(
           radius: radius,
           value: numOfBreak.toDouble(),
-          title: "$numOfBreak",
+          title: "$percentOfBreak%",
           color: Colors.red,
           titleStyle: style),
     ]),
-    swapAnimationDuration: const Duration(milliseconds: 150), // Optional
-    swapAnimationCurve: Curves.linear, // Optional
+    swapAnimationDuration: const Duration(milliseconds: 400), // Optional
+    swapAnimationCurve: Curves.easeOutSine, // Optional
   );
 }
 
@@ -180,4 +185,47 @@ renderLegend(double width) {
       ),
     ],
   );
+}
+
+renderDataTable(int numOfOccupy, int numOfTheft, int numOfBreak) {
+  return DataTable(
+      border: const TableBorder(
+          top: BorderSide(width: 1, color: Colors.black38),
+          bottom: BorderSide(width: 1, color: Colors.black38),
+          verticalInside: BorderSide(width: 1, color: Colors.black26)),
+      columns: const <DataColumn>[
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              '  점거  ',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              '  도난  ',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+        DataColumn(
+          label: Expanded(
+            child: Text(
+              '  파손  ',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ],
+      rows: <DataRow>[
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Center(child: Text(numOfOccupy.toString()))),
+            DataCell(Center(child: Text(numOfTheft.toString()))),
+            DataCell(Center(child: Text(numOfBreak.toString()))),
+          ],
+        ),
+      ]);
 }
