@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:magic_eye/MagicEyeView/main_provider.dart';
+import 'package:provider/provider.dart';
 
 class StatisticsLineChart extends StatefulWidget {
   final BuildContext context;
@@ -162,7 +164,7 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
                   Container(
                     width: 38,
                     height: 38,
-                    margin: const EdgeInsets.only(left: 3),
+                    margin: const EdgeInsets.only(left: 4),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(8),
@@ -224,7 +226,7 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
                 }
               }),
               const SizedBox(
-                width: 40,
+                width: 30,
               )
             ],
           ),
@@ -511,19 +513,19 @@ Widget yearBottomTitleWidgets(double value, TitleMeta meta) {
   Widget text;
   switch (value.toInt()) {
     case 0:
-      text = Text((now.year - 4).toString(), style: style);
-      break;
-    case 1:
       text = Text((now.year - 3).toString(), style: style);
       break;
-    case 2:
+    case 1:
       text = Text((now.year - 2).toString(), style: style);
+      break;
+    case 2:
+      text = Text((now.year - 1).toString(), style: style);
       break;
     case 3:
       text = Transform.translate(
         offset: const Offset(-12, 0),
         child: Text(
-          (now.year - 1).toString(),
+          now.year.toString(),
           style: style,
         ),
       );

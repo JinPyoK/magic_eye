@@ -10,15 +10,76 @@ class MainProvider extends ChangeNotifier {
   late UserInfo userInfo = us;
   late List<dynamic> records = List.from(us.anormals);
   late List<dynamic> cctvs = List.from(us.cctvs);
+
+  // CCTV Screen
   late List<String> menu =
       List.from(us.cctvs.map((cctv) => cctv['name'] as String).toList());
   String _connectAPI = '';
   String _connectCam = '';
 
+  // CCTV Screen & MyPage
   String displayName = getDisplayName();
 
+  // Record Screen
   bool refresh = false;
 
+  // Statistics Visitors
+  DateTime now = DateTime.now();
+  List<int> monthNum = List<int>.generate(12, (index) => 0);
+  List<int> dayNum = List<int>.generate(31, (index) => 0);
+  List<int> hourNum = List<int>.generate(24, (index) => 0);
+  List<int> yearNum = List<int>.generate(4, (index) => 0);
+
+  Future<void> calculateVisitors() async {
+    late int month;
+    late int day;
+    late int hour;
+    late int year;
+    late int numOfPeople;
+    List<String> keys = List.from(userInfo.peopleCount.keys);
+    List<Map<dynamic, dynamic>> values = List.from(userInfo.peopleCount.values);
+
+    for (int i = 0; i < keys.length; i++) {
+      year = int.parse(keys[i].substring(0, 4));
+      month = int.parse(keys[i].substring(5, 7));
+      day = int.parse(keys[i].substring(8, 10));
+      hour = int.parse(keys[i].substring(11, 13));
+      numOfPeople = values[i]['people_count'];
+
+      if (year == now.year) {
+        yearNum[3] += numOfPeople;
+      } else if (year == now.year - 1) {
+        yearNum[2] += numOfPeople;
+      } else if (year == now.year - 2) {
+        yearNum[1] += numOfPeople;
+      } else if (year == now.year - 3) {
+        yearNum[0] += numOfPeople;
+      }
+
+      for (var i = 1; i <= now.month; i++) {
+        if (month == i) {
+          monthNum[i - 1] += numOfPeople;
+          break;
+        }
+      }
+
+      for (var i = 1; i <= now.day; i++) {
+        if (day == i) {
+          dayNum[i - 1] += numOfPeople;
+          break;
+        }
+      }
+
+      for (var i = 0; i <= now.hour; i++) {
+        if (hour == i) {
+          hourNum[i] += numOfPeople;
+          break;
+        }
+      }
+    }
+  }
+
+  // CCTV Screen
   VlcPlayerController videoPlayerController = VlcPlayerController.network(
     '',
     hwAcc: HwAcc.full,

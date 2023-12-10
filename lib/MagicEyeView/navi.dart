@@ -5,6 +5,7 @@ import 'MyPageScreen/my_page_screen.dart';
 import 'RecordScreen/record_screen.dart';
 import 'StatisticsScreen/statistics_screen.dart';
 import 'main_provider.dart';
+import 'package:provider/provider.dart';
 
 class Navi extends StatefulWidget {
   const Navi({super.key});
@@ -55,6 +56,7 @@ class _NaviState extends State<Navi> {
             );
           } else {
             us = snapshot.data!;
+            context.read<MainProvider>().calculateVisitors();
             return Scaffold(
               resizeToAvoidBottomInset: false,
               body: IndexedStack(
