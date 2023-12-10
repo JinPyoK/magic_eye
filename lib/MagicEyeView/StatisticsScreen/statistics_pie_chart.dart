@@ -19,6 +19,8 @@ class _StatisticsPieChartState extends State<StatisticsPieChart> {
   int numOfTheft = 1;
   int numOfBreak = 1;
 
+  double opacity = 0;
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +39,7 @@ class _StatisticsPieChartState extends State<StatisticsPieChart> {
         numOfOccupy--;
         numOfTheft--;
         numOfBreak--;
+        opacity = 1;
       });
     });
   }
@@ -65,22 +68,32 @@ class _StatisticsPieChartState extends State<StatisticsPieChart> {
             const SizedBox(
               height: 30,
             ),
-            renderDataTable(numOfOccupy, numOfTheft, numOfBreak),
+            AnimatedOpacity(
+              opacity: opacity,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOutSine,
+              child: renderDataTable(numOfOccupy, numOfTheft, numOfBreak),
+            ),
             const SizedBox(
               height: 30,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "총합: ${numOfOccupy + numOfTheft + numOfBreak}",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                const SizedBox(
-                  width: 30,
-                )
-              ],
+            AnimatedOpacity(
+              opacity: opacity,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOutSine,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "총합: ${numOfOccupy + numOfTheft + numOfBreak}",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  )
+                ],
+              ),
             )
           ],
         );

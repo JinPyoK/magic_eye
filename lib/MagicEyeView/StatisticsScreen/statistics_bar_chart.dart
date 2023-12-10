@@ -36,6 +36,8 @@ class _StatisticsBarChartState extends State<StatisticsBarChart> {
   double val7 = 0;
   double val8 = 0;
 
+  double opacity = 0;
+
   @override
   void initState() {
     super.initState();
@@ -76,6 +78,8 @@ class _StatisticsBarChartState extends State<StatisticsBarChart> {
         val6 = numOfWoman3 / totalOfWoman * 100;
         val7 = numOfMan4 / totalOfMan * 100;
         val8 = numOfWoman4 / totalOfWoman * 100;
+
+        opacity = 1;
       });
     });
   }
@@ -156,16 +160,21 @@ class _StatisticsBarChartState extends State<StatisticsBarChart> {
         const SizedBox(
           height: 10,
         ),
-        renderDataTable(<String>[
-          val1.toStringAsFixed(1),
-          val2.toStringAsFixed(1),
-          val3.toStringAsFixed(1),
-          val4.toStringAsFixed(1),
-          val5.toStringAsFixed(1),
-          val6.toStringAsFixed(1),
-          val7.toStringAsFixed(1),
-          val8.toStringAsFixed(1),
-        ]),
+        AnimatedOpacity(
+          opacity: opacity,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOutSine,
+          child: renderDataTable(<String>[
+            val1.toStringAsFixed(1),
+            val2.toStringAsFixed(1),
+            val3.toStringAsFixed(1),
+            val4.toStringAsFixed(1),
+            val5.toStringAsFixed(1),
+            val6.toStringAsFixed(1),
+            val7.toStringAsFixed(1),
+            val8.toStringAsFixed(1),
+          ]),
+        ),
       ],
     );
   }

@@ -15,21 +15,37 @@ class StatisticsLineChart extends StatefulWidget {
 class _StatisticsLineChartState extends State<StatisticsLineChart> {
   String showChart = 'M';
 
-  List<FlSpot> monthSpots = const [
-    FlSpot(0, 789),
-    FlSpot(1, 387),
-    FlSpot(2, 289),
-    FlSpot(3, 672),
-    FlSpot(4, 889),
-    FlSpot(5, 1200),
-    FlSpot(6, 874),
-    FlSpot(7, 551),
-    FlSpot(8, 645),
-    FlSpot(9, 123),
-    FlSpot(10, 254),
-    FlSpot(11, 333),
-    FlSpot(12, 921),
+  List<FlSpot> emptySpots = const [
+    FlSpot(0, 10),
+    FlSpot(1, 10),
+    FlSpot(2, 10),
+    FlSpot(3, 10),
+    FlSpot(4, 10),
+    FlSpot(5, 10),
+    FlSpot(6, 10),
+    FlSpot(7, 10),
+    FlSpot(8, 10),
+    FlSpot(9, 10),
+    FlSpot(10, 10),
+    FlSpot(11, 10),
   ];
+
+  List<FlSpot> monthSpots = const [
+    FlSpot(0, 7.89),
+    FlSpot(1, 3.87),
+    FlSpot(2, 2.89),
+    FlSpot(3, 6.72),
+    FlSpot(4, 8.89),
+    FlSpot(5, 1.2),
+    FlSpot(6, 8.74),
+    FlSpot(7, 5.51),
+    FlSpot(8, 6.45),
+    FlSpot(9, 1.23),
+    FlSpot(10, 2.54),
+    FlSpot(11, 3.33),
+  ];
+
+  late List<FlSpot> animatedSpots;
 
   List<FlSpot> daySpots = const [
     FlSpot(0, 6),
@@ -49,8 +65,14 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
     FlSpot(6, 1),
     FlSpot(8, 4),
     FlSpot(9, 1),
-    FlSpot(11, 2),
-    FlSpot(12, 5),
+    FlSpot(11, 8),
+    FlSpot(12, 2),
+    FlSpot(14, 1),
+    FlSpot(16, 2),
+    FlSpot(17, 6),
+    FlSpot(18, 4),
+    FlSpot(19, 13),
+    FlSpot(23, 8),
   ];
 
   List<FlSpot> yearSpots = const [
@@ -59,6 +81,17 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
     FlSpot(2, 36),
     FlSpot(3, 26),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    animatedSpots = emptySpots;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        animatedSpots = monthSpots;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +116,7 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
                     child: Builder(builder: (context) {
                       if (showChart == 'M') {
                         return LineChart(
-                          mainData(monthSpots, monthBottomTitleWidgets,
+                          mainData(animatedSpots, monthBottomTitleWidgets,
                               monthLeftTitleWidgets),
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeOutSine,
@@ -288,40 +321,40 @@ Widget monthBottomTitleWidgets(double value, TitleMeta meta) {
       fontWeight: FontWeight.bold, fontSize: 12, color: Colors.white70);
   Widget text;
   switch (value.toInt()) {
-    case 1:
+    case 0:
       text = const Text('1', style: style);
       break;
-    case 2:
+    case 1:
       text = const Text('2', style: style);
       break;
-    case 3:
+    case 2:
       text = const Text('3', style: style);
       break;
-    case 4:
+    case 3:
       text = const Text('4', style: style);
       break;
-    case 5:
+    case 4:
       text = const Text('5', style: style);
       break;
-    case 6:
+    case 5:
       text = const Text('6', style: style);
       break;
-    case 7:
+    case 6:
       text = const Text('7', style: style);
       break;
-    case 8:
+    case 7:
       text = const Text('8', style: style);
       break;
-    case 9:
+    case 8:
       text = const Text('9', style: style);
       break;
-    case 10:
+    case 9:
       text = const Text('10', style: style);
       break;
-    case 11:
+    case 10:
       text = const Text('11', style: style);
       break;
-    case 12:
+    case 11:
       text = const Text('12', style: style);
       break;
     default:
@@ -335,21 +368,22 @@ Widget monthBottomTitleWidgets(double value, TitleMeta meta) {
   );
 }
 
+// 100으로 나눈 값
 Widget monthLeftTitleWidgets(double value, TitleMeta meta) {
   const style = TextStyle(
       fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white70);
   String text;
   switch (value.toInt()) {
-    case 100:
+    case 1:
       text = '100';
       break;
-    case 300:
+    case 3:
       text = '300';
       break;
-    case 600:
+    case 6:
       text = '600';
       break;
-    case 1000:
+    case 10:
       text = '1K';
       break;
     default:
@@ -364,19 +398,19 @@ Widget dayBottomTitleWidgets(double value, TitleMeta meta) {
       fontWeight: FontWeight.bold, fontSize: 12, color: Colors.white70);
   Widget text;
   switch (value.toInt()) {
-    case 1:
+    case 0:
       text = const Text('1', style: style);
       break;
-    case 5:
+    case 4:
       text = const Text('5', style: style);
       break;
-    case 10:
+    case 9:
       text = const Text('10', style: style);
       break;
-    case 20:
+    case 19:
       text = const Text('20', style: style);
       break;
-    case 30:
+    case 29:
       text = const Text('30', style: style);
       break;
     default:
@@ -469,6 +503,7 @@ Widget hourLeftTitleWidgets(double value, TitleMeta meta) {
   return Text(text, style: style, textAlign: TextAlign.left);
 }
 
+// 지난 4년간 통계
 Widget yearBottomTitleWidgets(double value, TitleMeta meta) {
   const style = TextStyle(
       fontWeight: FontWeight.bold, fontSize: 12, color: Colors.white70);
@@ -476,19 +511,19 @@ Widget yearBottomTitleWidgets(double value, TitleMeta meta) {
   Widget text;
   switch (value.toInt()) {
     case 0:
-      text = Text((now.year - 3).toString(), style: style);
+      text = Text((now.year - 4).toString(), style: style);
       break;
     case 1:
-      text = Text((now.year - 2).toString(), style: style);
+      text = Text((now.year - 3).toString(), style: style);
       break;
     case 2:
-      text = Text((now.year - 1).toString(), style: style);
+      text = Text((now.year - 2).toString(), style: style);
       break;
     case 3:
       text = Transform.translate(
         offset: const Offset(-12, 0),
         child: Text(
-          now.year.toString(),
+          (now.year - 1).toString(),
           style: style,
         ),
       );
@@ -504,6 +539,7 @@ Widget yearBottomTitleWidgets(double value, TitleMeta meta) {
   );
 }
 
+// 1000으로 나눈 값
 Widget yearLeftTitleWidgets(double value, TitleMeta meta) {
   const style = TextStyle(
       fontWeight: FontWeight.bold, fontSize: 15, color: Colors.white70);
@@ -520,6 +556,9 @@ Widget yearLeftTitleWidgets(double value, TitleMeta meta) {
       break;
     case 35:
       text = '35K';
+      break;
+    case 50:
+      text = '50K';
       break;
     default:
       return Container();
