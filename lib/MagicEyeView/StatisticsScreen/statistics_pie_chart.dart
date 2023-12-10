@@ -24,21 +24,33 @@ class _StatisticsPieChartState extends State<StatisticsPieChart> {
   @override
   void initState() {
     super.initState();
+    List<dynamic> recordData = widget.context.read<MainProvider>().records;
+
+    if (recordData.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          for (var i = 0; i < recordData.length; i++) {
+            if (recordData[i]['type'] == 'occupy') {
+              numOfOccupy++;
+            } else if (recordData[i]['type'] == 'theft') {
+              numOfTheft++;
+            } else if (recordData[i]['type'] == 'break') {
+              numOfBreak++;
+            }
+          }
+          numOfOccupy--;
+          numOfTheft--;
+          numOfBreak--;
+        });
+      });
+    } else {
+      numOfOccupy = 0;
+      numOfTheft = 0;
+      numOfBreak = 0;
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        List<dynamic> recordData = widget.context.read<MainProvider>().records;
-        for (var i = 0; i < recordData.length; i++) {
-          if (recordData[i]['type'] == 'occupy') {
-            numOfOccupy++;
-          } else if (recordData[i]['type'] == 'theft') {
-            numOfTheft++;
-          } else if (recordData[i]['type'] == 'break') {
-            numOfBreak++;
-          }
-        }
-        numOfOccupy--;
-        numOfTheft--;
-        numOfBreak--;
         opacity = 1;
       });
     });
