@@ -38,57 +38,15 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
     FlSpot(11, 10),
   ];
 
-  List<FlSpot> monthSpots = [
-    // FlSpot(0, 7.89),
-    // FlSpot(1, 3.87),
-    // FlSpot(2, 2.89),
-    // FlSpot(3, 6.72),
-    // FlSpot(4, 8.89),
-    // FlSpot(5, 1.2),
-    // FlSpot(6, 8.74),
-    // FlSpot(7, 5.51),
-    // FlSpot(8, 6.45),
-    // FlSpot(9, 1.23),
-    // FlSpot(10, 2.54),
-    // FlSpot(11, 3.33),
-  ];
+  List<FlSpot> monthSpots = <FlSpot>[];
 
   late List<FlSpot> animatedSpots;
 
-  List<FlSpot> daySpots = [
-    // FlSpot(0, 6),
-    // FlSpot(2, 10),
-    // FlSpot(4, 20),
-    // FlSpot(7, 35),
-    // FlSpot(8, 24),
-    // FlSpot(9, 13),
-    // FlSpot(11, 24),
-    // FlSpot(12, 25),
-  ];
+  List<FlSpot> daySpots = <FlSpot>[];
 
-  List<FlSpot> hourSpots = [
-    // FlSpot(0, 3),
-    // FlSpot(2, 1),
-    // FlSpot(4, 5),
-    // FlSpot(6, 1),
-    // FlSpot(8, 4),
-    // FlSpot(9, 1),
-    // FlSpot(11, 8),
-    // FlSpot(12, 2),
-    // FlSpot(14, 1),
-    // FlSpot(16, 2),
-    // FlSpot(17, 6),
-    // FlSpot(18, 4),
-    // FlSpot(19, 13),
-    // FlSpot(23, 8),
-  ];
+  List<FlSpot> hourSpots = <FlSpot>[];
 
-  List<FlSpot> yearSpots = [
-    // FlSpot(0, 17),
-    // FlSpot(1, 23),
-    // FlSpot(2, 36),
-    // FlSpot(3, 26),
-  ];
+  List<FlSpot> yearSpots = <FlSpot>[];
 
   @override
   void initState() {
@@ -114,8 +72,6 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
     for (int i = 0; i < 4; i++) {
       yearSpots.add(FlSpot(i.toDouble(), numOfYear[i].toDouble() / 1000));
     }
-
-    setState(() {});
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {

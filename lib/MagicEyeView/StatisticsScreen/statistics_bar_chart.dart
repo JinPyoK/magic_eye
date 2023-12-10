@@ -260,13 +260,13 @@ renderDataTable(List<String> info) {
         ),
         DataColumn(
           label: Text(
-            '남자',
+            ' 남자',
             style: style,
           ),
         ),
         DataColumn(
           label: Text(
-            '여자',
+            ' 여자',
             style: style,
           ),
         ),

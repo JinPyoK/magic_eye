@@ -28,7 +28,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Expanded(child: StatisticsNavi(width, height)),
+                  Expanded(child: StatisticsNavi(context, width, height)),
                 ],
               )
             ],

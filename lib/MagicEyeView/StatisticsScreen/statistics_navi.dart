@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/StatisticsScreen/statistics_bar_chart.dart';
 import 'package:magic_eye/MagicEyeView/StatisticsScreen/statistics_line_chart.dart';
 import 'package:magic_eye/MagicEyeView/StatisticsScreen/statistics_pie_chart.dart';
+import 'package:provider/provider.dart';
+
+import '../main_provider.dart';
 
 class StatisticsNavi extends StatefulWidget {
+  final BuildContext context;
   final double width;
   final double height;
 
-  const StatisticsNavi(this.width, this.height, {super.key});
+  const StatisticsNavi(this.context, this.width, this.height, {super.key});
 
   @override
   State<StatisticsNavi> createState() => _StatisticsNaviState();
@@ -20,6 +24,12 @@ class _StatisticsNaviState extends State<StatisticsNavi> {
     const Text('Visitors')
   ];
   final List<bool> _selectedStatistics = <bool>[true, false, false];
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<MainProvider>().calculateVisitors();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +59,7 @@ class _StatisticsNaviState extends State<StatisticsNavi> {
               fillColor: Colors.black26,
               color: Colors.black54,
               constraints:
-                  const BoxConstraints(minHeight: 40.0, minWidth: 90.0),
+              const BoxConstraints(minHeight: 40.0, minWidth: 90.0),
               textStyle: const TextStyle(fontWeight: FontWeight.bold),
               isSelected: _selectedStatistics,
               children: statistics,
