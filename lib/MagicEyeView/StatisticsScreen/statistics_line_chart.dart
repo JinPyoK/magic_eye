@@ -272,17 +272,37 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
         ),
         Builder(builder: (_) {
           if (showChart == 'M') {
-            return LineChartTable('$maxMonthNumIndex월', '$maxMonthNum명',
-                '$minMonthNumIndex월', '$minMonthNum명');
+            return LineChartTable(
+              '$maxMonthNumIndex월',
+              '$maxMonthNum명',
+              '$minMonthNumIndex월',
+              '$minMonthNum명',
+              key: GlobalKey(),
+            );
           } else if (showChart == 'D') {
-            return LineChartTable('$maxDayNumIndex일', '$maxDayNum명',
-                '$minDayNumIndex일', '$minDayNum명');
+            return LineChartTable(
+              '$maxDayNumIndex일',
+              '$maxDayNum명',
+              '$minDayNumIndex일',
+              '$minDayNum명',
+              key: GlobalKey(),
+            );
           } else if (showChart == 'H') {
-            return LineChartTable('$maxHourNumIndex시', '$maxHourNum명',
-                '$minHourNumIndex시', '$minHourNum명');
+            return LineChartTable(
+              '$maxHourNumIndex시',
+              '$maxHourNum명',
+              '$minHourNumIndex시',
+              '$minHourNum명',
+              key: GlobalKey(),
+            );
           } else if (showChart == 'Y') {
-            return LineChartTable('$maxYearNumIndex년', '$maxYearNum명',
-                '$minYearNumIndex년', '$minYearNum명');
+            return LineChartTable(
+              '$maxYearNumIndex년',
+              '$maxYearNum명',
+              '$minYearNumIndex년',
+              '$minYearNum명',
+              key: GlobalKey(),
+            );
           } else {
             return Container();
           }
