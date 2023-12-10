@@ -56,24 +56,30 @@ class MainProvider extends ChangeNotifier {
         yearNum[0] += numOfPeople;
       }
 
-      for (var i = 1; i <= now.month; i++) {
-        if (month == i) {
-          monthNum[i - 1] += numOfPeople;
-          break;
+      if (year == now.year) {
+        for (var i = 1; i <= now.month; i++) {
+          if (month == i) {
+            monthNum[i - 1] += numOfPeople;
+            break;
+          }
         }
       }
 
-      for (var i = 1; i <= now.day; i++) {
-        if (day == i) {
-          dayNum[i - 1] += numOfPeople;
-          break;
+      if (month == now.month) {
+        for (var i = 1; i <= now.day; i++) {
+          if (day == i) {
+            dayNum[i - 1] += numOfPeople;
+            break;
+          }
         }
       }
 
-      for (var i = 0; i <= now.hour; i++) {
-        if (hour == i) {
-          hourNum[i] += numOfPeople;
-          break;
+      if (day == now.day) {
+        for (var i = 0; i <= now.hour; i++) {
+          if (hour == i) {
+            hourNum[i] += numOfPeople;
+            break;
+          }
         }
       }
     }
