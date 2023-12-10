@@ -44,41 +44,51 @@ class _StatisticsBarChartState extends State<StatisticsBarChart> {
     Map<dynamic, dynamic> peopleInfo =
         widget.context.read<MainProvider>().userInfo.peopleInfo;
 
-    for (var info in peopleInfo.values) {
-      int age = info['age'].toInt();
-      String gender = info['gender'];
+    if (peopleInfo.isNotEmpty) {
+      for (var info in peopleInfo.values) {
+        int age = info['age'].toInt();
+        String gender = info['gender'];
 
-      if (age < 20 && gender == 'Man') {
-        numOfMan1++;
-      } else if (age < 20 && gender == 'Woman') {
-        numOfWoman1++;
-      } else if ((age >= 20 && age < 40) && gender == 'Man') {
-        numOfMan2++;
-      } else if ((age >= 20 && age < 40) && gender == 'Woman') {
-        numOfWoman2++;
-      } else if ((age >= 40 && age < 60) && gender == 'Man') {
-        numOfMan3++;
-      } else if ((age >= 40 && age < 60) && gender == 'Woman') {
-        numOfWoman3++;
-      } else if (age > 60 && gender == 'Man') {
-        numOfMan4++;
-      } else if (age > 60 && gender == 'Woman') {
-        numOfWoman4++;
+        if (age < 20 && gender == 'Man') {
+          numOfMan1++;
+        } else if (age < 20 && gender == 'Woman') {
+          numOfWoman1++;
+        } else if ((age >= 20 && age < 40) && gender == 'Man') {
+          numOfMan2++;
+        } else if ((age >= 20 && age < 40) && gender == 'Woman') {
+          numOfWoman2++;
+        } else if ((age >= 40 && age < 60) && gender == 'Man') {
+          numOfMan3++;
+        } else if ((age >= 40 && age < 60) && gender == 'Woman') {
+          numOfWoman3++;
+        } else if (age > 60 && gender == 'Man') {
+          numOfMan4++;
+        } else if (age > 60 && gender == 'Woman') {
+          numOfWoman4++;
+        }
       }
+      totalOfMan = numOfMan1 + numOfMan2 + numOfMan3 + numOfMan4;
+      totalOfWoman = numOfWoman1 + numOfWoman2 + numOfWoman3 + numOfWoman4;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          if (totalOfMan > 0) {
+            val1 = numOfMan1 / totalOfMan * 100;
+            val3 = numOfMan2 / totalOfMan * 100;
+            val5 = numOfMan3 / totalOfMan * 100;
+            val7 = numOfMan4 / totalOfMan * 100;
+          }
+
+          if (totalOfWoman > 0) {
+            val2 = numOfWoman1 / totalOfWoman * 100;
+            val4 = numOfWoman2 / totalOfWoman * 100;
+            val6 = numOfWoman3 / totalOfWoman * 100;
+            val8 = numOfWoman4 / totalOfWoman * 100;
+          }
+        });
+      });
     }
-    totalOfMan = numOfMan1 + numOfMan2 + numOfMan3 + numOfMan4;
-    totalOfWoman = numOfWoman1 + numOfWoman2 + numOfWoman3 + numOfWoman4;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        val1 = numOfMan1 / totalOfMan * 100;
-        val2 = numOfWoman1 / totalOfWoman * 100;
-        val3 = numOfMan2 / totalOfMan * 100;
-        val4 = numOfWoman2 / totalOfWoman * 100;
-        val5 = numOfMan3 / totalOfMan * 100;
-        val6 = numOfWoman3 / totalOfWoman * 100;
-        val7 = numOfMan4 / totalOfMan * 100;
-        val8 = numOfWoman4 / totalOfWoman * 100;
-
         opacity = 1;
       });
     });
@@ -247,6 +257,8 @@ Widget bottomTitles(double value, TitleMeta meta) {
 renderDataTable(List<String> info) {
   TextStyle style = const TextStyle(fontWeight: FontWeight.bold);
   return DataTable(
+      dataRowMaxHeight: 40,
+      dataRowMinHeight: 20,
       border: const TableBorder(
           top: BorderSide(width: 2, color: Colors.black38),
           bottom: BorderSide(width: 2, color: Colors.black38),
