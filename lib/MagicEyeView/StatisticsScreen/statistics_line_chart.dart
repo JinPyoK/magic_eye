@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'package:provider/provider.dart';
+import 'statistics_line_chart_table.dart';
 
 class StatisticsLineChart extends StatefulWidget {
   final BuildContext context;
@@ -22,6 +23,24 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
   late List<int> numOfDay;
   late List<int> numOfHour;
   late List<int> numOfYear;
+
+  int maxMonthNum = 0;
+  int minMonthNum = 999999999;
+  int maxDayNum = 0;
+  int minDayNum = 999999999;
+  int maxHourNum = 0;
+  int minHourNum = 999999999;
+  int maxYearNum = 0;
+  int minYearNum = 999999999;
+
+  int maxMonthNumIndex = 0;
+  int minMonthNumIndex = 0;
+  int maxDayNumIndex = 0;
+  int minDayNumIndex = 0;
+  int maxHourNumIndex = 0;
+  int minHourNumIndex = 0;
+  int maxYearNumIndex = 0;
+  int minYearNumIndex = 0;
 
   List<FlSpot> emptySpots = const [
     FlSpot(0, 10),
@@ -62,15 +81,47 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
 
     for (int i = 0; i < now.month; i++) {
       monthSpots.add(FlSpot(i.toDouble(), numOfMonth[i].toDouble() / 100));
+      if (numOfMonth[i] > maxMonthNum) {
+        maxMonthNum = numOfMonth[i];
+        maxMonthNumIndex = i + 1;
+      }
+      if (numOfMonth[i] < minMonthNum) {
+        minMonthNum = numOfMonth[i];
+        minMonthNumIndex = i + 1;
+      }
     }
     for (int i = 0; i < now.day; i++) {
       daySpots.add(FlSpot(i.toDouble(), numOfDay[i].toDouble()));
+      if (numOfDay[i] > maxDayNum) {
+        maxDayNum = numOfDay[i];
+        maxDayNumIndex = i + 1;
+      }
+      if (numOfDay[i] < minDayNum) {
+        minDayNum = numOfDay[i];
+        minDayNumIndex = i + 1;
+      }
     }
     for (int i = 0; i < now.hour; i++) {
       hourSpots.add(FlSpot(i.toDouble(), numOfHour[i].toDouble()));
+      if (numOfHour[i] > maxHourNum) {
+        maxHourNum = numOfHour[i];
+        maxHourNumIndex = i;
+      }
+      if (numOfHour[i] < minHourNum) {
+        minHourNum = numOfHour[i];
+        minHourNumIndex = i;
+      }
     }
     for (int i = 0; i < 4; i++) {
       yearSpots.add(FlSpot(i.toDouble(), numOfYear[i].toDouble() / 1000));
+      if (numOfYear[i] > maxYearNum) {
+        maxYearNum = numOfYear[i];
+        maxYearNumIndex = i + now.year - 3;
+      }
+      if (numOfYear[i] < minYearNum) {
+        minYearNum = numOfYear[i];
+        minYearNumIndex = i + now.year - 3;
+      }
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -216,6 +267,26 @@ class _StatisticsLineChartState extends State<StatisticsLineChart> {
             ],
           ),
         ]),
+        const SizedBox(
+          height: 20,
+        ),
+        Builder(builder: (_) {
+          if (showChart == 'M') {
+            return LineChartTable('$maxMonthNumIndex월', '$maxMonthNum명',
+                '$minMonthNumIndex월', '$minMonthNum명');
+          } else if (showChart == 'D') {
+            return LineChartTable('$maxDayNumIndex일', '$maxDayNum명',
+                '$minDayNumIndex일', '$minDayNum명');
+          } else if (showChart == 'H') {
+            return LineChartTable('$maxHourNumIndex시', '$maxHourNum명',
+                '$minHourNumIndex시', '$minHourNum명');
+          } else if (showChart == 'Y') {
+            return LineChartTable('$maxYearNumIndex년', '$maxYearNum명',
+                '$minYearNumIndex년', '$minYearNum명');
+          } else {
+            return Container();
+          }
+        }),
       ],
     );
   }
@@ -552,4 +623,41 @@ Widget yearLeftTitleWidgets(double value, TitleMeta meta) {
   }
 
   return Text(text, style: style, textAlign: TextAlign.left);
+}
+
+renderDataTable(List<String> info) {
+  TextStyle style = const TextStyle(fontWeight: FontWeight.bold);
+  return DataTable(
+      border: const TableBorder(
+          top: BorderSide(width: 2, color: Colors.black38),
+          bottom: BorderSide(width: 2, color: Colors.black38),
+          verticalInside: BorderSide(width: 1, color: Colors.black26)),
+      columns: <DataColumn>[
+        DataColumn(
+          label: Text(
+            'Peak',
+            style: style,
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            'Off-Peak',
+            style: style,
+          ),
+        ),
+      ],
+      rows: <DataRow>[
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Center(child: Text(info[0]))),
+            DataCell(Center(child: Text(info[2]))),
+          ],
+        ),
+        DataRow(
+          cells: <DataCell>[
+            DataCell(Center(child: Text(info[1]))),
+            DataCell(Center(child: Text(info[3]))),
+          ],
+        ),
+      ]);
 }

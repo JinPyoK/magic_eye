@@ -17,6 +17,14 @@ class MainProvider extends ChangeNotifier {
   String _connectAPI = '';
   String _connectCam = '';
 
+  // CCTV Screen
+  VlcPlayerController videoPlayerController = VlcPlayerController.network(
+    '',
+    hwAcc: HwAcc.full,
+    autoPlay: false,
+    options: VlcPlayerOptions(),
+  );
+
   // CCTV Screen & MyPage
   String displayName = getDisplayName();
 
@@ -84,14 +92,6 @@ class MainProvider extends ChangeNotifier {
       }
     }
   }
-
-  // CCTV Screen
-  VlcPlayerController videoPlayerController = VlcPlayerController.network(
-    '',
-    hwAcc: HwAcc.full,
-    autoPlay: false,
-    options: VlcPlayerOptions(),
-  );
 
   Future<void> changeAPI(String api) async {
     int changedIndex = cctvs.indexWhere((cctv) => cctv['name'] == api);
