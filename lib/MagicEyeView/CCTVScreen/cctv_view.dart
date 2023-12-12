@@ -15,10 +15,14 @@ class CCTVView extends StatefulWidget {
 }
 
 class _CCTVViewState extends State<CCTVView> {
+
   @override
   void initState() {
     super.initState();
-    widget.context.read<MainProvider>().videoPlayerController.initialize();
+    context
+        .read<MainProvider>()
+        .videoPlayerController
+        .initialize();
   }
 
   @override
@@ -33,12 +37,17 @@ class _CCTVViewState extends State<CCTVView> {
         ),
         borderRadius: BorderRadius.circular(28),
       ),
-      child: context.watch<MainProvider>().menu.isNotEmpty
+      child: context
+          .watch<MainProvider>()
+          .menu
+          .isNotEmpty
           ? VlcPlayer(
-              controller: context.watch<MainProvider>().videoPlayerController,
-              aspectRatio: 16 / 9,
-              placeholder: const Center(child: CircularProgressIndicator()),
-            )
+        controller: context
+            .watch<MainProvider>()
+            .videoPlayerController,
+        aspectRatio: 16 / 9,
+        placeholder: const Center(child: CircularProgressIndicator()),
+      )
           : Container(),
     );
   }
