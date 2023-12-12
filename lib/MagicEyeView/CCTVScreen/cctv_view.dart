@@ -18,10 +18,7 @@ class _CCTVViewState extends State<CCTVView> {
   @override
   void initState() {
     super.initState();
-    // widget.context
-    //     .read<MainProvider>()
-    //     .videoPlayerController
-    //     .initialize();
+    widget.context.read<MainProvider>().videoPlayerController.initialize();
   }
 
   @override

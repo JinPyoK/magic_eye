@@ -5,6 +5,9 @@ import 'MyPageScreen/my_page_screen.dart';
 import 'RecordScreen/record_screen.dart';
 import 'StatisticsScreen/statistics_screen.dart';
 import 'main_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:magic_eye/Firebase/database.dart';
 
 class Navi extends StatefulWidget {
   const Navi({super.key});
@@ -28,10 +31,35 @@ class _NaviState extends State<Navi> {
     });
   }
 
+  void getMyDeviceToken() async {
+    final token = await FirebaseMessaging.instance.getToken();
+    await updateDB({'alarmToken': token});
+  }
+
   @override
   void initState() {
     super.initState();
     getUserInfo();
+    getMyDeviceToken();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      RemoteNotification? notification = message.notification;
+
+      if (notification != null) {
+        FlutterLocalNotificationsPlugin().show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'magic_eye_channel',
+              'magic_eye_notification',
+              importance: Importance.max,
+            ),
+          ),
+        );
+      }
+    });
   }
 
   @override
