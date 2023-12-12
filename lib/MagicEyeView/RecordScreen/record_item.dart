@@ -63,7 +63,10 @@ class _RecordItemState extends State<RecordItem> {
                   const SizedBox(
                     height: 10,
                   ),
-                  RecordVideo(width, widget.videoURL),
+                  RecordVideo(
+                    width,
+                    widget.videoURL,
+                  ),
                   const SizedBox(
                     height: 10,
                   ),

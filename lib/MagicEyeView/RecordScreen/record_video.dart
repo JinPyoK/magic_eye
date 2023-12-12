@@ -12,10 +12,15 @@ class RecordVideo extends StatefulWidget {
 
 class _RecordVideoState extends State<RecordVideo> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: widget.width / 1.1,
-      height: 150,
+      height: 200,
       decoration: BoxDecoration(
         border: Border.all(),
       ),
