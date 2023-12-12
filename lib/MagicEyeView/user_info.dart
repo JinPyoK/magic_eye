@@ -9,6 +9,7 @@ class UserInfo {
   final dynamic breakAlarm;
   final dynamic peopleCount;
   final dynamic peopleInfo;
+  final dynamic alarmCount;
 
   const UserInfo(
       {required this.storeNumber,
@@ -18,7 +19,8 @@ class UserInfo {
       required this.theftAlarm,
       required this.breakAlarm,
       required this.peopleCount,
-      required this.peopleInfo});
+      required this.peopleInfo,
+      required this.alarmCount});
 
   factory UserInfo.fromJson(Map<dynamic, dynamic> json) {
     return UserInfo(
@@ -30,6 +32,7 @@ class UserInfo {
       breakAlarm: json['breakAlarm'] ?? false,
       peopleCount: json['people_count'] ?? {},
       peopleInfo: json['people_info'] ?? {},
+      alarmCount: json['alarmCount'] ?? 0,
     );
   }
 
@@ -43,6 +46,7 @@ class UserInfo {
       breakAlarm: false,
       peopleCount: {},
       peopleInfo: {},
+      alarmCount: 0,
     );
   }
 
@@ -55,6 +59,7 @@ class UserInfo {
         "breakAlarm": breakAlarm,
         "people_count": peopleCount,
         "people_info": peopleInfo,
+        "alarmCount": alarmCount,
       };
 }
 

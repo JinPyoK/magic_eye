@@ -25,7 +25,10 @@ class CCTVScreen extends StatelessWidget {
                     SizedBox(
                       height: height / 25,
                     ),
-                    renderMainBar(width),
+                    renderMainBar(
+                        width,
+                        context.watch<MainProvider>().alarmBadge,
+                        context.read<MainProvider>().onAlarmTap),
                     renderIntroduce(
                         width, context.watch<MainProvider>().displayName),
                     const SizedBox(
@@ -47,7 +50,7 @@ class CCTVScreen extends StatelessWidget {
   }
 }
 
-renderMainBar(double width) {
+renderMainBar(double width, int alarmNum, VoidCallback onAlarmTap) {
   return SizedBox(
     width: width / 1.2,
     height: 70,
@@ -67,11 +70,9 @@ renderMainBar(double width) {
           ],
         ),
         Badge(
-          label: const Text("2"),
+          label: alarmNum == 0 ? null : Text(alarmNum.toString()),
           child: GestureDetector(
-            onTap: () {
-              // Todo: Route to RecordScreen and set alarm text 0
-            },
+            onTap: onAlarmTap,
             child: const Icon(
               Icons.alarm,
               size: 40,

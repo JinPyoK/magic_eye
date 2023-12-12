@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_eye/MagicEyeView/user_info.dart';
+import 'package:provider/provider.dart';
 import 'CCTVScreen/cctv_screen.dart';
 import 'MyPageScreen/my_page_screen.dart';
 import 'RecordScreen/record_screen.dart';
@@ -17,19 +18,12 @@ class Navi extends StatefulWidget {
 }
 
 class _NaviState extends State<Navi> {
-  int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     CCTVScreen(),
     RecordScreen(),
     StatisticsScreen(),
     MyPageScreen(),
   ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   void getMyDeviceToken() async {
     final token = await FirebaseMessaging.instance.getToken();
@@ -86,7 +80,7 @@ class _NaviState extends State<Navi> {
             return Scaffold(
               resizeToAvoidBottomInset: false,
               body: IndexedStack(
-                index: _selectedIndex,
+                index: context.watch<MainProvider>().selectedIndex,
                 children: _widgetOptions,
               ),
               bottomNavigationBar: BottomNavigationBar(
@@ -108,10 +102,10 @@ class _NaviState extends State<Navi> {
                     label: 'MY',
                   ),
                 ],
-                currentIndex: _selectedIndex,
+                currentIndex: context.watch<MainProvider>().selectedIndex,
                 selectedItemColor: Colors.deepPurpleAccent,
                 unselectedItemColor: Colors.black,
-                onTap: _onItemTapped,
+                onTap: context.read<MainProvider>().onItemTapped,
               ),
             );
           }

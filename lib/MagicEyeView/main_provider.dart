@@ -38,6 +38,20 @@ class MainProvider extends ChangeNotifier {
   List<int> hourNum = List<int>.generate(24, (index) => 0);
   List<int> yearNum = List<int>.generate(4, (index) => 0);
 
+  int selectedIndex = 0;
+  int alarmBadge = us.alarmCount;
+
+  void onItemTapped(int index) {
+    selectedIndex = index;
+    notifyListeners();
+  }
+
+  void onAlarmTap() {
+    onItemTapped(1);
+    alarmBadge = 0;
+    updateDB({'alarmCount': 0});
+  }
+
   Future<void> calculateVisitors() async {
     late int month;
     late int day;
