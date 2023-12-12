@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magic_eye/MagicEyeView/RecordScreen/record_video.dart';
+import 'package:magic_eye/MagicEyeView/RecordScreen/record_video_url.dart';
 import 'package:magic_eye/MagicEyeView/main_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +63,7 @@ class _RecordItemState extends State<RecordItem> {
                   const SizedBox(
                     height: 10,
                   ),
-                  RecordVideo(
+                  RecordVideoURL(
                     width,
                     widget.videoURL,
                   ),

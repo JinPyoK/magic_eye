@@ -31,6 +31,19 @@ class MainProvider extends ChangeNotifier {
   // Record Screen
   bool refresh = false;
 
+  bool showButton = false;
+  double buttonOpacity = 0;
+
+  void changeShowButton() {
+    showButton = !showButton;
+    notifyListeners();
+  }
+
+  void changeButtonOpacity() {
+    buttonOpacity == 0 ? buttonOpacity = 1 : buttonOpacity = 0;
+    notifyListeners();
+  }
+
   // Statistics Visitors
   DateTime now = DateTime.now();
   List<int> monthNum = List<int>.generate(12, (index) => 0);
