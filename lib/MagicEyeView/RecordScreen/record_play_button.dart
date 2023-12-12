@@ -8,8 +8,9 @@ class PlayButton extends StatefulWidget {
   final VlcPlayerController vlcPlayerController;
   final double width;
   final double height;
+  final String url;
 
-  const PlayButton(this.vlcPlayerController, this.width, this.height,
+  const PlayButton(this.vlcPlayerController, this.width, this.height, this.url,
       {super.key});
 
   @override
@@ -48,7 +49,7 @@ class _PlayButtonState extends State<PlayButton> {
           height: widget.height / 1.2,
           color: Colors.black.withOpacity(0.5),
           child: Center(
-            child: PlayAndPause(widget.vlcPlayerController),
+            child: PlayAndPause(widget.vlcPlayerController, widget.url),
           ),
         ),
       ),

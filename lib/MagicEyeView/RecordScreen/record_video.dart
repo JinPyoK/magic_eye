@@ -24,24 +24,29 @@ class _RecordVideoState extends State<RecordVideo> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _vlcPlayerController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, box) {
       final width = box.maxWidth;
       final height = box.maxHeight;
       return Stack(children: [
-        VlcPlayer(
-          controller: _vlcPlayerController,
-          aspectRatio: 16 / 9,
-          placeholder: const Center(child: CircularProgressIndicator()),
-        ),
         GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
             context.read<MainProvider>().changeShowButton();
           },
-          child: const SizedBox(
-            width: 250,
-            height: 200,
+          child: VlcPlayer(
+            controller: _vlcPlayerController,
+            aspectRatio: 16 / 9,
+            placeholder: const Center(
+                child: CircularProgressIndicator(
+              color: Colors.white,
+            )),
           ),
         ),
         context.watch<MainProvider>().showButton
@@ -49,6 +54,7 @@ class _RecordVideoState extends State<RecordVideo> {
                 _vlcPlayerController,
                 width,
                 height,
+                widget.url,
                 key: GlobalKey(),
               )
             : Container(),
