@@ -52,7 +52,7 @@ class MainProvider extends ChangeNotifier {
   List<int> yearNum = List<int>.generate(4, (index) => 0);
 
   int selectedIndex = 0;
-  int alarmBadge = us.alarmCount;
+  int alarmBadge = us.alarmCount['alarmCount'];
 
   void onItemTapped(int index) {
     selectedIndex = index;
@@ -62,7 +62,9 @@ class MainProvider extends ChangeNotifier {
   void onAlarmTap() {
     onItemTapped(1);
     alarmBadge = 0;
-    updateDB({'alarmCount': 0});
+    updateDB({
+      'alarmCount': {'alarmCount': 0}
+    });
   }
 
   Future<void> calculateVisitors() async {

@@ -32,7 +32,7 @@ class UserInfo {
       breakAlarm: json['breakAlarm'] ?? false,
       peopleCount: json['people_count'] ?? {},
       peopleInfo: json['people_info'] ?? {},
-      alarmCount: json['alarmCount'] ?? 0,
+      alarmCount: json['alarmCount'] ?? {},
     );
   }
 
@@ -46,7 +46,7 @@ class UserInfo {
       breakAlarm: false,
       peopleCount: {},
       peopleInfo: {},
-      alarmCount: 0,
+      alarmCount: {},
     );
   }
 
