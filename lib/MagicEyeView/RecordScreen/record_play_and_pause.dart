@@ -15,26 +15,32 @@ class PlayAndPause extends StatefulWidget {
 
 class _PlayAndPauseState extends State<PlayAndPause> {
   bool videoPlaying = true;
+  bool canTouch = true;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () async {
-          if (videoPlaying && widget.vlcPlayerController.value.isPlaying) {
-            await widget.vlcPlayerController.pause();
-            setState(() {
-              videoPlaying = false;
-            });
-          } else {
-            if (widget.vlcPlayerController.value.isEnded) {
-              context.read<MainProvider>().changeShowButton();
-              await widget.vlcPlayerController.setMediaFromNetwork(widget.url);
-            } else {
-              await widget.vlcPlayerController.play();
+          if (canTouch) {
+            canTouch = false;
+            if (videoPlaying && widget.vlcPlayerController.value.isPlaying) {
+              await widget.vlcPlayerController.pause();
               setState(() {
-                videoPlaying = true;
+                videoPlaying = false;
               });
+            } else {
+              if (widget.vlcPlayerController.value.isEnded) {
+                context.read<MainProvider>().changeShowButton();
+                await widget.vlcPlayerController
+                    .setMediaFromNetwork(widget.url);
+              } else {
+                await widget.vlcPlayerController.play();
+                setState(() {
+                  videoPlaying = true;
+                });
+              }
             }
+            canTouch = true;
           }
         },
         icon: Icon(
