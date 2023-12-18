@@ -1,16 +1,19 @@
-# magic_eye
+# MagicEye
+무인 점포와 같은 시설에서 방문자의 이상행동을 감지하여 사용자에게 알리는 앱
+<br>
 
-A new Flutter project.
+## 개발기간
+2023.11.24 ~ 2023.12.18
 
-## Getting Started
+## 개발 환경
+- Flutter
+- IDE: Android Studio
+- Firebase
+- Supervision
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 주요 기능
+- 회원가입 & 로그인 & 소셜로그인
+- CCTV를 연결하여 실시간 감시
+- 이상행동 기록 및 영상 관찰
+- 이상행동/방문자 연령별 및 성별/방문자 수 그래프 통계 분석
+- 이상행동별 알림 설정
