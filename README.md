@@ -1,19 +1,19 @@
 # MagicEye
-무인 점포와 같은 시설에서 방문자의 이상행동을 감지하여 사용자에게 알리는 앱
+An app designed to detect unusual behavior of visitors in facilities such as unmanned stores and alert users.
 <br>
 
-## 🕰️ 개발기간
+## 🕰️ Development Period
 2023.11.24 ~ 2023.12.18
 
-## 🌏 개발 환경
+## 🌏 Development Environment
 - Flutter
 - IDE: Android Studio
 - Firebase
 - Supervision
 
-## 🎯 주요 기능
-- 회원가입 & 로그인 & 소셜로그인
-- CCTV를 연결하여 실시간 감시
-- 이상행동 기록 및 영상 관찰
-- 이상행동/방문자 연령별 및 성별/방문자 수 그래프 통계 분석
-- 이상행동별 알림 설정
+## 🎯 Key Features
+- User registration & login & social login
+- Real-time monitoring by connecting to CCTV
+- Recording and observing instances of unusual behavior
+- Statistical analysis of unusual behavior/visitor age and gender/visitor count graphs
+- Notification settings for specific types of unusual behavior
