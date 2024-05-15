@@ -13,7 +13,7 @@ An app designed to detect unusual behavior of visitors in facilities such as unm
 
 ## 🎯 Key Features
 - User registration & login & social login
-- [Real-time monitoring by connecting to CCTV] (https://github.com/JinPyoK/magic_eye/wiki/How-to-connect-cctv-in-realtime)
+- [Real-time monitoring by connecting to CCTV](https://github.com/JinPyoK/magic_eye/wiki/How-to-connect-cctv-in-realtime)
 - Recording and observing instances of unusual behavior
 - Statistical analysis of unusual behavior/visitor age and gender/visitor count graphs
 - Notification settings for specific types of unusual behavior
